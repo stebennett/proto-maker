@@ -20,7 +20,8 @@ That's it.
 | The next task to execute | `TODOS.md` |
 | Step-by-step for a specific plan | `docs/superpowers/plans/2026-04-24-proto-maker-<subsystem>.md` |
 | An index of everything | `docs/superpowers/README.md` |
-| User preferences / decision rationale | memory files under `/Users/stevebennett/.claude/projects/-Users-stevebennett-code-github-proto-maker/memory/` |
+| Decision rationale + "why we rejected X" | `docs/DECISIONS.md` |
+| User preferences (primary-machine only) | memory files at `~/.claude/projects/-Users-stevebennett-code-github-proto-maker/memory/` |
 
 ## State check at resume time
 
@@ -40,14 +41,15 @@ grep -c "^- \[ \]" TODOS.md  # remaining
 
 ## Rules of engagement (do not violate)
 
-These were locked in during brainstorming. Re-deriving them wastes everyone's time.
+These were locked in during brainstorming. Full rationale + alternatives considered for each is in `docs/DECISIONS.md`. Read there before changing direction on any of them.
 
-1. **PMs do not have developer tooling.** No git, no npm, no pip, no gh. Every skill's body and every installer's code honors this.
-2. **Codex CLI is the primary runtime.** Claude Code support is deferred to v1.1.
-3. **Role-specialized subagents (Designer, Critic, User Advocate, Engineer) are the tension mechanism.** Don't collapse them into a single general-purpose subagent without re-raising the trade-off.
-4. **Clean minimal wireframe styling (Pico.css), not Balsamiq/sketchy.** Trade-off was accepted knowingly.
-5. **Unsigned binaries for v1.** Signing is v1.1.
-6. **`context/*.md` is required before any per-idea work runs.** `/setup` populates it; every other skill refuses to run without it.
+1. **PMs do not have developer tooling.** No git, no npm, no pip, no gh. (D2)
+2. **Codex CLI is the primary runtime.** Claude Code support is deferred to v1.1. (D1)
+3. **Role-specialized subagents (Designer, Critic, User Advocate, Engineer) are the tension mechanism.** Don't collapse them into a single general-purpose subagent without re-raising the trade-off with Steve. (D4)
+4. **Clean minimal wireframe styling (Pico.css), not Balsamiq/sketchy.** Trade-off was knowingly accepted. (D6)
+5. **Unsigned binaries for v1.** Signing is v1.1. (D10)
+6. **`context/*.md` is required before any per-idea work runs.** `/setup` populates it; every other skill refuses to run without it. (D5)
+7. **Tension must live at BOTH `/refine` AND `/build-prototypes`.** Removing it from either stage undermines D4. (D9)
 
 ## If you find yourself adding a new decision
 

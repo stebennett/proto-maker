@@ -24,6 +24,7 @@ PMs at organizations where Codex CLI is available but developer tooling (git, np
 ### Operational
 - [TODOS.md](../../TODOS.md) — execution tracker, grouped by plan. This is your "what's next" file.
 - [docs/RESUMING.md](../RESUMING.md) — how to pick the project back up if context is lost.
+- [docs/DECISIONS.md](../DECISIONS.md) — the 12 key architectural decisions with alternatives considered and "do-not-reopen" guidance.
 
 ## Dependency order
 
