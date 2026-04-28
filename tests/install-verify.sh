@@ -68,7 +68,7 @@ BIN="$SANDBOX/.local/bin/proto-maker-server"
 PORT=4796
 "$BIN" --port $PORT --root "$SANDBOX" &
 SERVER_PID=$!
-trap 'kill $SERVER_PID 2>/dev/null; rm -rf "$SANDBOX" dist' EXIT
+trap 'kill $SERVER_PID 2>/dev/null; rm -rf "$SANDBOX"' EXIT
 for i in 1 2 3 4 5 6 7 8 9 10; do
   if curl -sf "http://127.0.0.1:$PORT/__ping__" >/dev/null 2>&1; then break; fi
   sleep 0.2
