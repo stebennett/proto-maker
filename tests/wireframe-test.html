@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>annotations.js test harness</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+    .pass { color: #1a5e1a; }
+    .fail { color: #b00020; font-weight: 700; }
+    .test { padding: 0.25rem 0; border-bottom: 1px solid #eee; }
+    pre { background: #f7f7f7; padding: 0.5rem; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>annotations.js test harness</h1>
+  <p>Open this file in a browser. All assertions should be green.</p>
+  <div id="summary"></div>
+  <div id="results"></div>
+
+  <!--
+    Mock window.fetch and navigator.clipboard BEFORE loading annotations.js
+    so the module sees our mocks when it initializes.
+  -->
+  <script>
+    window.__testFetchCalls = [];
+    window.__testFetchResponse = { ok: true, status: 200 };
+    window.__testFetchShouldThrow = false;
+
+    window.fetch = (url, opts) => {
+      window.__testFetchCalls.push({ url, opts });
+      if (window.__testFetchShouldThrow) {
+        return Promise.reject(new Error('mock network failure'));
+      }
+      return Promise.resolve(window.__testFetchResponse);
+    };
+
+    window.__testClipboard = null;
+    if (!navigator.clipboard) {
+      Object.defineProperty(navigator, 'clipboard', { value: {}, writable: true });
+    }
+    navigator.clipboard.writeText = (text) => {
+      window.__testClipboard = text;
+      return Promise.resolve();
+    };
+
+    // Each test resets state via this helper.
+    window.__testReset = () => {
+      window.__testFetchCalls = [];
+      window.__testFetchResponse = { ok: true, status: 200 };
+      window.__testFetchShouldThrow = false;
+      window.__testClipboard = null;
+      localStorage.clear();
+    };
+  </script>
+
+  <script src="../templates/wireframe-base/annotations.js"></script>
+
+  <script>
+    const results = document.getElementById('results');
+    const summary = document.getElementById('summary');
+    let pass = 0, fail = 0;
+
+    function assert(label, condition, detail) {
+      const div = document.createElement('div');
+      div.className = 'test ' + (condition ? 'pass' : 'fail');
+      div.textContent = (condition ? 'PASS' : 'FAIL') + ': ' + label;
+      if (!condition && detail) {
+        const pre = document.createElement('pre');
+        pre.textContent = JSON.stringify(detail, null, 2);
+        div.appendChild(pre);
+      }
+      results.appendChild(div);
+      if (condition) pass++; else fail++;
+    }
+
+    async function runAllTests() {
+      // Tests are appended in subsequent tasks. For now, verify the test
+      // framework itself is wired up:
+      window.__testReset();
+      assert('test framework loads annotations.js', typeof window.ProtoMakerAnnotations === 'object',
+        { ProtoMakerAnnotations: typeof window.ProtoMakerAnnotations });
+
+      summary.textContent = `${pass} passed, ${fail} failed`;
+      summary.className = fail === 0 ? 'pass' : 'fail';
+    }
+
+    runAllTests();
+  </script>
+</body>
+</html>
