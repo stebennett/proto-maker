@@ -29,9 +29,3 @@ func main() {
 		log.Fatalf("listen: %v", err)
 	}
 }
-
-// newMux is defined in handlers.go (will be created in a later task).
-// For now, a temporary stub lives here so the package compiles.
-func newMux(root string) http.Handler {
-	return http.NotFoundHandler()
-}
