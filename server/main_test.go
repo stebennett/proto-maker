@@ -110,3 +110,33 @@ func TestAnnotationPostRejectsNonAnnotationsPath(t *testing.T) {
 		t.Fatalf("status: got %d, want 400", resp.StatusCode)
 	}
 }
+
+func TestAnnotationPostRejectsOutsideRoot(t *testing.T) {
+	srv, root := newTestServer(t)
+
+	// Pre-create a sibling directory OUTSIDE root that the attack would
+	// target. If the attack succeeded, a file would appear here.
+	outside := filepath.Join(root, "..", "outside-target")
+	if err := os.MkdirAll(outside, 0o755); err != nil {
+		t.Fatalf("seed outside: %v", err)
+	}
+	t.Cleanup(func() { os.RemoveAll(outside) })
+
+	resp, err := http.Post(
+		srv.URL+"/%2e%2e/outside-target/annotations/gotcha.json",
+		"application/json",
+		strings.NewReader(`{}`),
+	)
+	if err != nil {
+		t.Fatalf("post: %v", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusCreated {
+		t.Fatalf("attack succeeded! status %d", resp.StatusCode)
+	}
+
+	// The outside file must NOT exist.
+	if _, err := os.Stat(filepath.Join(outside, "annotations", "gotcha.json")); !os.IsNotExist(err) {
+		t.Fatalf("file was written outside root (err=%v)", err)
+	}
+}
