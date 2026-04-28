@@ -30,43 +30,48 @@ description: Stage 2. Generates 2-4 candidate alternatives for the explored idea
    - `engineer` — feasibility + constraint-conflict critique
 6. Wait for all three. If any returns garbage, retry once per AGENTS.md tension
    protocol.
-7. Synthesize into `ideas/<slug>/01-alternatives.md`:
+7. Synthesize into `ideas/<slug>/01-alternatives.md`. The file has two
+   sections: a markdown body, then a fenced YAML verdict block at the end.
 
-```markdown
----
-stage: 2
-idea: <slug>
-updated: <YYYY-MM-DD>
-inputs: [context/, 00-exploration.md]
----
+The markdown body (write verbatim, replacing `<...>` placeholders):
 
-# Alternatives for <idea title>
+    ---
+    stage: 2
+    idea: <slug>
+    updated: <YYYY-MM-DD>
+    inputs: [context/, 00-exploration.md]
+    ---
 
-## Alternative 1: <angle name>
-<paragraph>
+    # Alternatives for <idea title>
 
-## Alternative 2: <angle name>
-<paragraph>
+    ## Alternative 1: <angle name>
+    <paragraph>
 
-## Alternative 3: <angle name>
-<paragraph>
+    ## Alternative 2: <angle name>
+    <paragraph>
 
-## Critic memo
-<full critic memo>
+    ## Alternative 3: <angle name>
+    <paragraph>
 
-## User Advocate memo
-<full user-advocate memo>
+    ## Critic memo
+    <full critic memo>
 
-## Engineer memo
-<full engineer memo>
+    ## User Advocate memo
+    <full user-advocate memo>
 
-```yaml
-recommendation: proceed | revise | kill
-justification: |
-  Two-sentence prose synthesis: which alternatives the verdict applies to,
-  and the one-sentence why. Pull this from the critic's recommendation block.
-```
-```
+    ## Engineer memo
+    <full engineer memo>
+
+Then, immediately after, append a YAML verdict block as a fenced code block.
+The block MUST start at column 0 (no indentation) so `contracts.sh` can match
+the `^recommendation:` line:
+
+    ```yaml
+    recommendation: proceed | revise | kill
+    justification: |
+      Two-sentence prose synthesis: which alternatives the verdict applies to,
+      and the one-sentence why. Pull this from the critic's recommendation block.
+    ```
 
 8. If verdict is `kill`, tell the PM:
    "The critic recommends killing this alternative space. Read the memo and

@@ -90,7 +90,7 @@ assert_file "$IDEA/04-review-notes.md"
 assert_frontmatter "$IDEA/04-review-notes.md"
 assert_file "$IDEA/03-prototypes/CHOSEN"
 if [ -f "$IDEA/03-prototypes/CHOSEN" ]; then
-  CHOSEN=$(cat "$IDEA/03-prototypes/CHOSEN" | tr -d '\n' | tr -d ' ')
+  CHOSEN=$(cat "$IDEA/03-prototypes/CHOSEN" | tr -d '\n' | tr -d '\r' | tr -d ' ')
   if [ "$CHOSEN" = "none" ] || [ -d "$IDEA/03-prototypes/$CHOSEN" ]; then
     echo "  PASS: CHOSEN points to a valid alternative or 'none'"; pass=$((pass + 1))
   else

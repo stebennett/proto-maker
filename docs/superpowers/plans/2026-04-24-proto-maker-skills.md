@@ -2042,8 +2042,8 @@ git commit -m "tests: dogfood walkthrough — canonical end-to-end test for prot
 | §5.7 | HANDOFF.md + handoff.zip | Task 15 |
 | §6.1 | Frontmatter on every artifact | All stage skills + Task 17 |
 | §6.2 | 02-scope.md required sections | Task 10 |
-| §6.5 | Subagent critique memos 150–400 words | Tasks 3, 4, 5 |
-| §6.6 | User story template | Task 14 |
+| §6.5 | Subagent critique memos 150–400 words | Tasks 3, 4, 5 (runtime-enforced; not asserted by `contracts.sh`) |
+| §6.6 | User story template | Task 14 (runtime-enforced; `contracts.sh` only asserts file + frontmatter) |
 | §9 | Refusals on missing inputs / kill verdict / etc. | All stage skills |
 | §10.1 | End-to-end dogfood | Task 18 |
 | §10.2 | Per-stage contract tests | Task 17 |

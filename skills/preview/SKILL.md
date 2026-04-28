@@ -29,33 +29,44 @@ overlay falls back to offline mode (localStorage + clipboard).
    (rerun the installer you used originally). Then try `/preview` again."
    Stop.
 
-3. Start the server in the background, rooted at the current working directory:
+3. Pick a free port from 4788–4798 and start the server in the background,
+   rooted at the current working directory. The loop tries each port in turn,
+   confirms the server actually responds (so we don't capture a port that some
+   unrelated process is squatting on without serving), and records the port
+   that succeeded:
    ```bash
-   proto-maker-server --port 4788 --root . > /tmp/proto-maker-server.log 2>&1 &
-   ```
-
-4. Wait briefly and re-probe:
-   ```bash
-   for i in 1 2 3 4 5 6 7 8 9 10; do
-     if curl -sf http://127.0.0.1:4788/__ping__ >/dev/null 2>&1; then
-       echo started; break
-     fi
-     sleep 0.2
+   PROTO_MAKER_PORT=""
+   for PORT in 4788 4789 4790 4791 4792 4793 4794 4795 4796 4797 4798; do
+     proto-maker-server --port "$PORT" --root . \
+       > /tmp/proto-maker-server.log 2>&1 &
+     SERVER_PID=$!
+     for i in 1 2 3 4 5 6 7 8 9 10; do
+       if curl -sf "http://127.0.0.1:$PORT/__ping__" >/dev/null 2>&1; then
+         PROTO_MAKER_PORT="$PORT"
+         break
+       fi
+       sleep 0.2
+     done
+     if [ -n "$PROTO_MAKER_PORT" ]; then break; fi
+     # This port didn't come up: kill our spawned process and try the next.
+     kill "$SERVER_PID" 2>/dev/null || true
+     wait "$SERVER_PID" 2>/dev/null || true
    done
+   if [ -z "$PROTO_MAKER_PORT" ]; then
+     echo "Could not bind any port in 4788-4798"
+     cat /tmp/proto-maker-server.log
+     exit 1
+   fi
+   echo "started on port $PROTO_MAKER_PORT"
    ```
-   If still not responding, surface `/tmp/proto-maker-server.log` to the PM.
+   If the loop exits without binding, surface `/tmp/proto-maker-server.log`
+   to the PM and stop.
 
-5. Tell the PM:
-   "Preview server started at http://127.0.0.1:4788/.
-   To view a prototype, open: http://127.0.0.1:4788/ideas/<idea>/03-prototypes/<alt>/index.html
+4. Tell the PM, substituting `$PROTO_MAKER_PORT` into the URL:
+   "Preview server started at http://127.0.0.1:$PROTO_MAKER_PORT/.
+   To view a prototype, open: http://127.0.0.1:$PROTO_MAKER_PORT/ideas/<idea>/03-prototypes/<alt>/index.html
    in a browser. The annotation overlay will save notes directly to disk.
    The server stops when you close this terminal session."
-
-## Port-in-use handling
-
-If port 4788 is in use by something other than proto-maker-server (the
-`/__ping__` probe fails AND a process holds 4788), retry with --port 4789,
-then 4790, up to 4798. Report the actual URL used.
 
 ## Constraints
 

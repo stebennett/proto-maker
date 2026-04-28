@@ -37,25 +37,37 @@ description: Stage 6. Applies PM feedback to the chosen alternative. Snapshots t
 
 ## Output
 
-Append to `ideas/<slug>/05-iteration-log.md` (creating the file if missing):
+Update `ideas/<slug>/05-iteration-log.md`. Behavior depends on whether the
+file already exists:
 
-```markdown
----
-stage: 6
-idea: <slug>
-updated: <YYYY-MM-DD>
-inputs: [CHOSEN, 04-review-notes.md, .history/]
----
+### First iteration (file missing) — create it with frontmatter + header + the iteration block
 
-# Iteration log for <idea title>
+    ---
+    stage: 6
+    idea: <slug>
+    updated: <YYYY-MM-DD>
+    inputs: [CHOSEN, 04-review-notes.md, .history/]
+    ---
 
-## Iteration N (<YYYY-MM-DD>)
-**Snapshot:** .history/iter-N/
-**Changes requested:** <PM's summary>
-**Changes made:** <bullets from designer's report>
-**New critiques:** see <alt>/critiques/*.md
+    # Iteration log for <idea title>
 
-```
+    ## Iteration N (<YYYY-MM-DD>)
+    **Snapshot:** .history/iter-N/
+    **Changes requested:** <PM's summary>
+    **Changes made:** <bullets from designer's report>
+    **New critiques:** see <alt>/critiques/*.md
+
+### Subsequent iterations (file exists) — APPEND ONLY a new iteration block
+
+Do NOT rewrite the frontmatter or the H1 — that would corrupt them. Bump the
+top-level `updated:` field in the frontmatter to today's date in place, then
+append a blank line followed by the new `## Iteration N` block:
+
+    ## Iteration N (<YYYY-MM-DD>)
+    **Snapshot:** .history/iter-N/
+    **Changes requested:** <PM's summary>
+    **Changes made:** <bullets from designer's report>
+    **New critiques:** see <alt>/critiques/*.md
 
 ## Done
 

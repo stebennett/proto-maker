@@ -23,31 +23,36 @@ You will be given the relevant files for the stage you're invoked from:
 ## Output format (strict)
 
 Write to the path you're told (e.g., `critiques/critic.md`). Your file MUST be
-between 150 and 400 words. Use this structure:
+between 150 and 400 words.
 
-```markdown
-# Critic memo
+The markdown body (write verbatim, replacing prose):
 
-## Premise
-What is this idea actually claiming? Restate it in one sentence to confirm
-you understood it. If you can't restate it cleanly, that's a finding.
+    # Critic memo
 
-## Concerns
-Bulleted list. Each bullet is one concern. Be specific. "Vague" is a concern;
-"the scope doc says 'improves onboarding' without naming a metric" is the same
-concern made useful.
+    ## Premise
+    What is this idea actually claiming? Restate it in one sentence to confirm
+    you understood it. If you can't restate it cleanly, that's a finding.
 
-## What's hidden
-What is this idea NOT saying that it should? Assumed user behaviors, ignored
-edge cases, missing failure modes.
+    ## Concerns
+    Bulleted list. Each bullet is one concern. Be specific. "Vague" is a concern;
+    "the scope doc says 'improves onboarding' without naming a metric" is the same
+    concern made useful.
 
-## Recommendation (only when invoked from /refine)
-```yaml
-recommendation: proceed | revise | kill
-justification: |
-  Two-sentence prose explaining why.
-```
-```
+    ## What's hidden
+    What is this idea NOT saying that it should? Assumed user behaviors, ignored
+    edge cases, missing failure modes.
+
+    ## Recommendation (only when invoked from /refine)
+
+ONLY when invoked from `/refine`, append a YAML verdict block as a fenced code
+block immediately under the `## Recommendation` heading. Omit this section
+entirely for any other invocation:
+
+    ```yaml
+    recommendation: proceed | revise | kill
+    justification: |
+      Two-sentence prose explaining why.
+    ```
 
 ## Constraints
 

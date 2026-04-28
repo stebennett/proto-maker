@@ -11,7 +11,8 @@ description: Stage 8. Assembles HANDOFF.md (table of contents + exec summary) an
 
 ## Refuse if
 
-- Any of `00-exploration.md`, `02-scope.md`, `06-user-stories.md`, or `CHOSEN` is missing.
+- Any of `00-exploration.md`, `02-scope.md`, `04-review-notes.md`,
+  `06-user-stories.md`, or `CHOSEN` is missing.
 
 ## Process
 
