@@ -107,6 +107,50 @@
       const offline2 = await window.ProtoMakerAnnotations.init({ screen: 'screen-1.html' });
       assert('mode is offline when ping returns 404', offline2.mode === 'offline');
 
+  // ---- Test 6: addNote in online mode POSTs to correct endpoint ----
+  window.__testReset();
+  window.__testFetchResponse = { ok: true, status: 200 };
+  const o6 = await window.ProtoMakerAnnotations.init({
+    screen: 'screen-2.html',
+    path: 'ideas/foo/03-prototypes/alt-1'
+  });
+  await o6.addNote('Why no back button here?', 'jsmith@acme.com');
+  const postCalls = window.__testFetchCalls.filter(c => c.opts && c.opts.method === 'POST');
+  assert('online: exactly one POST issued', postCalls.length === 1,
+    { postCalls });
+  assert('online: POST URL contains annotations/',
+    postCalls[0] && postCalls[0].url.includes('/annotations/'),
+    { url: postCalls[0] && postCalls[0].url });
+  assert('online: POST URL contains the path',
+    postCalls[0] && postCalls[0].url.includes('ideas/foo/03-prototypes/alt-1/annotations/'));
+  let postedBody = null;
+  try { postedBody = JSON.parse(postCalls[0].opts.body); } catch (_e) {}
+  assert('online: POST body parses as JSON with note + screen + author',
+    postedBody && postedBody.note === 'Why no back button here?'
+                && postedBody.screen === 'screen-2.html'
+                && postedBody.author === 'jsmith@acme.com',
+    { postedBody });
+
+  // ---- Test 7: addNote in offline mode persists to localStorage ----
+  window.__testReset();
+  window.__testFetchShouldThrow = true;
+  const o7 = await window.ProtoMakerAnnotations.init({
+    screen: 'screen-3.html',
+    path: 'ideas/foo/03-prototypes/alt-2'
+  });
+  await o7.addNote('Stakeholder offline note', 'guest');
+  const stored = JSON.parse(localStorage.getItem('proto-maker-annotations') || '[]');
+  assert('offline: localStorage contains 1 note', stored.length === 1, { stored });
+  assert('offline: stored note has expected fields',
+    stored[0] && stored[0].note === 'Stakeholder offline note'
+              && stored[0].screen === 'screen-3.html'
+              && stored[0].path === 'ideas/foo/03-prototypes/alt-2',
+    { stored });
+
+  // ---- Test 8: offline mode does NOT issue POSTs ----
+  assert('offline: zero POSTs to fetch',
+    window.__testFetchCalls.filter(c => c.opts && c.opts.method === 'POST').length === 0);
+
       summary.textContent = `${pass} passed, ${fail} failed`;
       summary.className = fail === 0 ? 'pass' : 'fail';
     }
