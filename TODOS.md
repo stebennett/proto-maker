@@ -14,16 +14,16 @@ Follow your global CLAUDE.md rule: check off completed items at the end of each 
 
 Plan: `docs/superpowers/plans/2026-04-24-proto-maker-server.md`
 
-- [ ] Task 1: Initialize Go module and skeleton
-- [ ] Task 2: Write failing tests for path validation
-- [ ] Task 3: Implement path validation
-- [ ] Task 4: Write failing tests for HTTP handlers
-- [ ] Task 5: Implement HTTP handlers
-- [ ] Task 6: Add outside-root rejection test
-- [ ] Task 7: Cross-compile script
-- [ ] Task 8: Server smoke test script
-- [ ] Task 9: Document the server package
-- [ ] Task 10: Final verification
+- [x] Task 1: Initialize Go module and skeleton
+- [x] Task 2: Write failing tests for path validation
+- [x] Task 3: Implement path validation
+- [x] Task 4: Write failing tests for HTTP handlers
+- [x] Task 5: Implement HTTP handlers
+- [x] Task 6: Add outside-root rejection test
+- [x] Task 7: Cross-compile script
+- [x] Task 8: Server smoke test script
+- [x] Task 9: Document the server package
+- [x] Task 10: Final verification
 
 **Phase 1 complete when:** all Go tests pass; all 4 binaries cross-compile; smoke test returns 5 PASS, 0 FAIL on the host.
 
