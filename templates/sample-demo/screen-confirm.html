@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <title>Saved — Acme</title>
+  <link rel="stylesheet" href=".proto-maker-assets/pico.min.css">
+  <link rel="stylesheet" href=".proto-maker-assets/components.css">
+</head>
+<body>
+  <nav class="mock-nav">
+    <span class="brand">Acme</span>
+    <a href="index.html">Home</a>
+    <a href="screen-settings.html">Settings</a>
+  </nav>
+  <main class="container">
+    <article class="mock-card">
+      <h2>Settings saved</h2>
+      <p>Your changes have been saved.</p>
+      <p><mark class="tbd">should this redirect to a confirmation toast on the previous screen instead?</mark></p>
+      <a href="screen-settings.html" role="button">Back to settings</a>
+    </article>
+  </main>
+  <script src=".proto-maker-assets/annotations.js"></script>
+  <script>
+    window.ProtoMakerAnnotations.init({
+      screen: 'screen-confirm.html',
+      path: 'templates/sample-demo'
+    });
+  </script>
+</body>
+</html>

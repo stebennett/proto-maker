@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <title>Settings — Acme</title>
+  <link rel="stylesheet" href=".proto-maker-assets/pico.min.css">
+  <link rel="stylesheet" href=".proto-maker-assets/components.css">
+</head>
+<body>
+  <nav class="mock-nav">
+    <span class="brand">Acme</span>
+    <a href="index.html">Home</a>
+    <a href="screen-settings.html">Settings</a>
+  </nav>
+  <main class="container">
+    <h1>Account settings</h1>
+
+    <article>
+      <h3>Theme</h3>
+      <label>
+        <input type="checkbox" id="dark-mode-toggle">
+        Enable dark mode
+      </label>
+      <p><mark class="tbd">applies only to authenticated users — guest mode keeps light theme</mark></p>
+    </article>
+
+    <article>
+      <h3>Profile</h3>
+      <table class="mock-table">
+        <tr><th>Field</th><th>Value</th></tr>
+        <tr><td>Name</td><td>Sample User</td></tr>
+        <tr><td>Email</td><td>sample@acme.test</td></tr>
+      </table>
+    </article>
+
+    <a href="screen-confirm.html" role="button">Save changes</a>
+  </main>
+  <script src=".proto-maker-assets/annotations.js"></script>
+  <script>
+    window.ProtoMakerAnnotations.init({
+      screen: 'screen-settings.html',
+      path: 'templates/sample-demo'
+    });
+    // Demonstrate in-page JS for explanatory interactions:
+    document.getElementById('dark-mode-toggle').addEventListener('change', (e) => {
+      document.documentElement.dataset.theme = e.target.checked ? 'dark' : 'light';
+    });
+  </script>
+</body>
+</html>

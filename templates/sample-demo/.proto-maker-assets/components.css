@@ -1,0 +1,157 @@
+/*
+ * proto-maker wireframe components
+ *
+ * Layered on top of Pico.css. Provides mock primitives that read as
+ * "deliberately unfinished" — clean lines, no decorative styling, just
+ * enough structure for stakeholders to grasp layout and flow.
+ *
+ * Conventions:
+ *   .mock-*  : structural placeholders (nav, sidebar, content area, table)
+ *   mark.tbd : explicit handwaving callouts that propagate to user stories
+ *   .anno-*  : annotation overlay UI (panel, button, list)
+ */
+
+/* ---- Wireframe layout primitives ---- */
+
+.mock-nav {
+  border-bottom: 1px solid var(--pico-muted-border-color, #ccc);
+  padding: 0.6rem 1rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  background: var(--pico-card-background-color, #fff);
+}
+.mock-nav .brand {
+  font-weight: 700;
+  margin-right: auto;
+}
+
+.mock-sidebar {
+  border-right: 1px solid var(--pico-muted-border-color, #ccc);
+  padding: 1rem;
+  min-width: 180px;
+  background: var(--pico-card-background-color, #fff);
+}
+.mock-content {
+  padding: 1.5rem;
+  flex: 1 1 auto;
+}
+.mock-layout {
+  display: flex;
+  align-items: stretch;
+  min-height: 60vh;
+}
+
+.mock-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.mock-table th, .mock-table td {
+  border-bottom: 1px solid var(--pico-muted-border-color, #ddd);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.mock-table th {
+  font-weight: 600;
+  background: var(--pico-card-sectioning-background-color, #f7f7f7);
+}
+
+.mock-card {
+  border: 1px solid var(--pico-muted-border-color, #ddd);
+  border-radius: var(--pico-border-radius, 4px);
+  padding: 1rem;
+}
+
+.mock-modal {
+  border: 1px solid var(--pico-muted-border-color, #ccc);
+  border-radius: var(--pico-border-radius, 6px);
+  padding: 1.5rem;
+  max-width: 480px;
+  margin: 2rem auto;
+  background: var(--pico-card-background-color, #fff);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.mock-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50;
+}
+.mock-modal-overlay[hidden] { display: none; }
+
+/* ---- TBD callout ---- */
+
+mark.tbd {
+  background: #fff3bf;
+  color: #5c4400;
+  border-bottom: 1px dashed #c9a200;
+  padding: 0 0.2em;
+}
+mark.tbd::before { content: "TBD: "; font-weight: 700; }
+
+/* ---- Annotation overlay ---- */
+
+.anno-button {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--pico-muted-border-color, #aaa);
+  background: var(--pico-card-background-color, #fff);
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.anno-panel {
+  position: fixed;
+  bottom: 4rem;
+  right: 1rem;
+  width: 320px;
+  max-height: 60vh;
+  background: var(--pico-card-background-color, #fff);
+  border: 1px solid var(--pico-muted-border-color, #aaa);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+}
+.anno-panel[hidden] { display: none; }
+.anno-panel header {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--pico-muted-border-color, #ddd);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+.anno-panel .anno-mode {
+  font-size: 0.75rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+.anno-panel .anno-mode.online { background: #c8f7c5; color: #1a5e1a; }
+.anno-panel .anno-mode.offline { background: #ffe0b2; color: #6e3a00; }
+.anno-panel textarea {
+  margin: 0.5rem; min-height: 4rem; resize: vertical;
+}
+.anno-panel .anno-actions {
+  display: flex; gap: 0.5rem; padding: 0 0.5rem 0.5rem;
+}
+.anno-panel ul {
+  list-style: none;
+  padding: 0 0.5rem 0.5rem;
+  margin: 0;
+  overflow-y: auto;
+  font-size: 0.85rem;
+}
+.anno-panel ul li {
+  padding: 0.4rem;
+  border-top: 1px solid var(--pico-muted-border-color, #eee);
+}
+.anno-panel ul li time { color: #666; font-size: 0.75rem; display: block; }

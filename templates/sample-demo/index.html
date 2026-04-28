@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sample demo — Acme Settings</title>
+  <link rel="stylesheet" href=".proto-maker-assets/pico.min.css">
+  <link rel="stylesheet" href=".proto-maker-assets/components.css">
+</head>
+<body>
+  <nav class="mock-nav">
+    <span class="brand">Acme</span>
+    <a href="index.html">Home</a>
+    <a href="screen-settings.html">Settings</a>
+  </nav>
+  <main class="container">
+    <h1>Welcome to Acme</h1>
+    <p>This is the sample-demo prototype. It exists to verify the wireframe template renders, links work, and the annotation overlay functions in offline mode.</p>
+    <article class="mock-card">
+      <h3>Try it</h3>
+      <ol>
+        <li>Click <a href="screen-settings.html">Settings</a> to navigate to a wireframe with a <code>mark.tbd</code> callout.</li>
+        <li>From any page, click the <strong>?</strong> button bottom-right to open the annotations panel.</li>
+        <li>Click <strong>Copy all notes</strong> to confirm structured JSON is written to your clipboard.</li>
+      </ol>
+    </article>
+  </main>
+  <script src=".proto-maker-assets/annotations.js"></script>
+  <script>
+    window.ProtoMakerAnnotations.init({
+      screen: 'index.html',
+      path: 'templates/sample-demo'
+    });
+  </script>
+</body>
+</html>
