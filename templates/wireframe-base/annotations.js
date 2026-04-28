@@ -79,12 +79,88 @@
     return notes;
   }
 
+  function renderUI(overlay) {
+    if (typeof document === 'undefined') return; // jsdom-less test environments
+
+    // Floating ? button
+    const btn = document.createElement('button');
+    btn.className = 'anno-button';
+    btn.type = 'button';
+    btn.textContent = '?';
+    btn.title = 'Add annotation';
+
+    // Panel
+    const panel = document.createElement('aside');
+    panel.className = 'anno-panel';
+    panel.hidden = true;
+    panel.innerHTML = `
+      <header>
+        <span>Notes — ${overlay.screen}</span>
+        <span class="anno-mode ${overlay.mode}">${overlay.mode}</span>
+      </header>
+      <textarea placeholder="Leave a note about this screen…"></textarea>
+      <div class="anno-actions">
+        <button type="button" data-act="add">Save</button>
+        <button type="button" data-act="copy">Copy all notes</button>
+      </div>
+      <ul></ul>
+    `;
+
+    document.body.appendChild(btn);
+    document.body.appendChild(panel);
+
+    btn.addEventListener('click', () => {
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) refreshList();
+    });
+
+    const ta = panel.querySelector('textarea');
+    panel.querySelector('[data-act=add]').addEventListener('click', async () => {
+      const text = ta.value.trim();
+      if (!text) return;
+      await overlay.addNote(text, prompt('Your name or email (optional):') || 'anonymous');
+      ta.value = '';
+      refreshList();
+    });
+
+    panel.querySelector('[data-act=copy]').addEventListener('click', async () => {
+      await overlay.copyNotes();
+      const original = panel.querySelector('[data-act=copy]').textContent;
+      panel.querySelector('[data-act=copy]').textContent = 'Copied!';
+      setTimeout(() => {
+        panel.querySelector('[data-act=copy]').textContent = original;
+      }, 1500);
+    });
+
+    function refreshList() {
+      const ul = panel.querySelector('ul');
+      ul.innerHTML = '';
+      const notes = overlay.exportNotes();
+      for (const n of notes) {
+        const li = document.createElement('li');
+        const t = new Date(n.timestamp).toLocaleString();
+        li.innerHTML = `<time>${t} — ${n.author}</time><div>${escapeHtml(n.note)}</div>`;
+        ul.appendChild(li);
+      }
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   async function init(opts) {
     if (activeOverlay) return activeOverlay;
     const screen = (opts && opts.screen) || 'unknown.html';
     const path = (opts && opts.path) || '';
     const mode = await detectMode();
     activeOverlay = { mode, screen, path, notes: [], addNote, exportNotes, copyNotes };
+    // Skip UI rendering during tests by checking for our test harness sentinel.
+    if (typeof window !== 'undefined' && !window.__testFetchCalls) {
+      renderUI(activeOverlay);
+    }
     return activeOverlay;
   }
 
