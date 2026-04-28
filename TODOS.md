@@ -79,13 +79,13 @@ Plan: `docs/superpowers/plans/2026-04-24-proto-maker-skills.md`
 
 Plan: `docs/superpowers/plans/2026-04-24-proto-maker-installer.md`
 
-- [ ] Task 1: install.sh (macOS/Linux)
-- [ ] Task 2: install.ps1 (Windows)
-- [ ] Task 3: Extend build-release.sh to produce per-platform zips
-- [ ] Task 4: Local install verification
-- [ ] Task 5: Repo-level README.md
-- [ ] Task 6: GitHub Actions release workflow
-- [ ] Task 7: Final end-to-end verification
+- [x] Task 1: install.sh (macOS/Linux)
+- [x] Task 2: install.ps1 (Windows)
+- [x] Task 3: Extend build-release.sh to produce per-platform zips
+- [x] Task 4: Local install verification
+- [x] Task 5: Repo-level README.md
+- [x] Task 6: GitHub Actions release workflow
+- [x] Task 7: Final end-to-end verification
 
 **Phase 4 complete when:** `tests/install-verify.sh` passes; a release zip, when extracted and installed into a sandbox HOME, places files in the expected locations and the installed binary responds to `/__ping__`.
 
@@ -95,7 +95,7 @@ Plan: `docs/superpowers/plans/2026-04-24-proto-maker-installer.md`
 
 v1 is shippable when:
 
-- [ ] All four phases complete (checkboxes above)
+- [x] All four phases complete (checkboxes above)
 - [ ] Dogfood walkthrough (Plan 3, Task 18) succeeds end-to-end on a Windows VM against an installed release zip
 - [ ] A GitHub Release tagged `v0.1.0` has all four platform zips attached (or equivalent internal hosting)
 - [ ] README.md screenshots of SmartScreen/Gatekeeper workarounds added (TBD by maintainer — Plan 4 README has text-only)
