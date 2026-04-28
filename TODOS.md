@@ -33,16 +33,16 @@ Plan: `docs/superpowers/plans/2026-04-24-proto-maker-server.md`
 
 Plan: `docs/superpowers/plans/2026-04-24-proto-maker-template.md`
 
-- [ ] Task 1: Vendor Pico.css
-- [ ] Task 2: Write components.css
-- [ ] Task 3: Write the screen template
-- [ ] Task 4: Write the JS test harness skeleton
-- [ ] Task 5: Implement annotations.js — mode detection
-- [ ] Task 6: Implement annotations.js — adding notes (online + offline)
-- [ ] Task 7: Implement annotations.js — copy-to-clipboard export
-- [ ] Task 8: Implement annotations.js — overlay UI (button + panel)
-- [ ] Task 9: Build a sample 3-screen demo prototype
-- [ ] Task 10: Manual visual verification
+- [x] Task 1: Vendor Pico.css
+- [x] Task 2: Write components.css
+- [x] Task 3: Write the screen template
+- [x] Task 4: Write the JS test harness skeleton
+- [x] Task 5: Implement annotations.js — mode detection
+- [x] Task 6: Implement annotations.js — adding notes (online + offline)
+- [x] Task 7: Implement annotations.js — copy-to-clipboard export
+- [x] Task 8: Implement annotations.js — overlay UI (button + panel)
+- [x] Task 9: Build a sample 3-screen demo prototype
+- [x] Task 10: Manual visual verification
 
 **Phase 2 complete when:** all 10 JS assertions pass in the browser harness; sample demo navigates correctly; annotations save online AND offline; clipboard JSON is valid.
 

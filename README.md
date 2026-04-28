@@ -25,7 +25,7 @@ CLAUDE.md                        Instructions for any agent session in this repo
 | Phase | Plan | Status |
 |---|---|---|
 | 1 | Go microserver | ✅ complete |
-| 2 | Wireframe template (Pico.css + annotations.js) | ⏳ not started |
+| 2 | Wireframe template (Pico.css + annotations.js) | ✅ complete |
 | 3 | Skills & agents (8 stage skills + 4 subagents) | ⏳ not started |
 | 4 | Installer & release (CI, zips, install scripts) | ⏳ not started |
 
