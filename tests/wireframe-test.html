@@ -50,6 +50,10 @@
       window.__testFetchShouldThrow = false;
       window.__testClipboard = null;
       localStorage.clear();
+      // Clear the annotations singleton so each test gets a fresh init().
+      if (window.ProtoMakerAnnotations && window.ProtoMakerAnnotations._resetForTests) {
+        window.ProtoMakerAnnotations._resetForTests();
+      }
     };
   </script>
 

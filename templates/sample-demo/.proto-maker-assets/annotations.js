@@ -118,7 +118,13 @@
     panel.querySelector('[data-act=add]').addEventListener('click', async () => {
       const text = ta.value.trim();
       if (!text) return;
-      await overlay.addNote(text, prompt('Your name or email (optional):') || 'anonymous');
+      const AUTHOR_KEY = 'proto-maker-author';
+      let author = localStorage.getItem(AUTHOR_KEY);
+      if (!author) {
+        author = prompt('Your name or email (used for all your notes):') || 'anonymous';
+        if (author !== 'anonymous') localStorage.setItem(AUTHOR_KEY, author);
+      }
+      await overlay.addNote(text, author);
       ta.value = '';
       refreshList();
     });
@@ -164,5 +170,11 @@
     return activeOverlay;
   }
 
-  global.ProtoMakerAnnotations = { init };
+  // Internal hook used by the test harness to reset the singleton between
+  // simulated page loads. Not part of the public API.
+  function _resetForTests() {
+    activeOverlay = null;
+  }
+
+  global.ProtoMakerAnnotations = { init, _resetForTests };
 })(typeof window !== 'undefined' ? window : this);
