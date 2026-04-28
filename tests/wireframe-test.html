@@ -151,6 +151,31 @@
   assert('offline: zero POSTs to fetch',
     window.__testFetchCalls.filter(c => c.opts && c.opts.method === 'POST').length === 0);
 
+  // ---- Test 9: exportNotes returns array of stored notes ----
+  window.__testReset();
+  window.__testFetchShouldThrow = true; // force offline so localStorage is the source
+  const o9 = await window.ProtoMakerAnnotations.init({
+    screen: 'sX.html', path: 'ideas/x/03-prototypes/alt-1'
+  });
+  await o9.addNote('first', 'a');
+  await o9.addNote('second', 'b');
+  const exported = o9.exportNotes();
+  assert('exportNotes returns 2 notes', Array.isArray(exported) && exported.length === 2,
+    { exported });
+
+  // ---- Test 10: copyNotes writes JSON to clipboard ----
+  window.__testReset();
+  window.__testFetchShouldThrow = true;
+  const o10 = await window.ProtoMakerAnnotations.init({
+    screen: 's.html', path: 'ideas/x/03-prototypes/alt-1'
+  });
+  await o10.addNote('hello', 'me');
+  await o10.copyNotes();
+  let parsed = null;
+  try { parsed = JSON.parse(window.__testClipboard); } catch (_e) {}
+  assert('copyNotes wrote JSON to clipboard', parsed && parsed.length === 1
+    && parsed[0].note === 'hello', { clipboard: window.__testClipboard });
+
       summary.textContent = `${pass} passed, ${fail} failed`;
       summary.className = fail === 0 ? 'pass' : 'fail';
     }

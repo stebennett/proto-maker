@@ -64,12 +64,27 @@
     return note;
   }
 
+  function exportNotes() {
+    if (this.mode === 'online') {
+      // In online mode the truth is on disk; we only have what's in this session.
+      return this.notes.slice();
+    }
+    const key = 'proto-maker-annotations';
+    return JSON.parse(localStorage.getItem(key) || '[]');
+  }
+
+  async function copyNotes() {
+    const notes = exportNotes.call(this);
+    await navigator.clipboard.writeText(JSON.stringify(notes, null, 2));
+    return notes;
+  }
+
   async function init(opts) {
     if (activeOverlay) return activeOverlay;
     const screen = (opts && opts.screen) || 'unknown.html';
     const path = (opts && opts.path) || '';
     const mode = await detectMode();
-    activeOverlay = { mode, screen, path, notes: [], addNote };
+    activeOverlay = { mode, screen, path, notes: [], addNote, exportNotes, copyNotes };
     return activeOverlay;
   }
 
