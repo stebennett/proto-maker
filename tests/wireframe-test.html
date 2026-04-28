@@ -74,11 +74,38 @@
     }
 
     async function runAllTests() {
-      // Tests are appended in subsequent tasks. For now, verify the test
-      // framework itself is wired up:
+      // ---- Test 1: framework loads ----
       window.__testReset();
-      assert('test framework loads annotations.js', typeof window.ProtoMakerAnnotations === 'object',
-        { ProtoMakerAnnotations: typeof window.ProtoMakerAnnotations });
+      assert('framework: annotations module exposed', typeof window.ProtoMakerAnnotations === 'object');
+
+      // ---- Test 2: probes /__ping__ on init ----
+      window.__testReset();
+      await window.ProtoMakerAnnotations.init({ screen: 'screen-1.html' });
+      assert(
+        'init probes /__ping__',
+        window.__testFetchCalls.some(c => c.url === '/__ping__'),
+        { fetchCalls: window.__testFetchCalls }
+      );
+
+      // ---- Test 3: detects online when ping returns 200 ----
+      window.__testReset();
+      window.__testFetchResponse = { ok: true, status: 200 };
+      const onlineOverlay = await window.ProtoMakerAnnotations.init({ screen: 'screen-1.html' });
+      assert('mode is online when ping succeeds', onlineOverlay.mode === 'online',
+        { mode: onlineOverlay.mode });
+
+      // ---- Test 4: falls back to offline when ping throws ----
+      window.__testReset();
+      window.__testFetchShouldThrow = true;
+      const offlineOverlay = await window.ProtoMakerAnnotations.init({ screen: 'screen-1.html' });
+      assert('mode is offline when ping throws', offlineOverlay.mode === 'offline',
+        { mode: offlineOverlay.mode });
+
+      // ---- Test 5: falls back to offline when ping returns non-200 ----
+      window.__testReset();
+      window.__testFetchResponse = { ok: false, status: 404 };
+      const offline2 = await window.ProtoMakerAnnotations.init({ screen: 'screen-1.html' });
+      assert('mode is offline when ping returns 404', offline2.mode === 'offline');
 
       summary.textContent = `${pass} passed, ${fail} failed`;
       summary.className = fail === 0 ? 'pass' : 'fail';
