@@ -29,6 +29,12 @@ jobs:
         run: bash tests/contracts.sh
       - name: Install verify
         run: bash tests/install-verify.sh
+      - name: Rebuild release zips with the tag version
+        # install-verify.sh internally runs build-release.sh with version
+        # "dev-test", overwriting the version-named zips from the earlier
+        # Build Release step. Rebuild here so the uploaded artifacts carry
+        # the correct ${{ github.ref_name }} in their filenames.
+        run: bash scripts/build-release.sh ${{ github.ref_name }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
