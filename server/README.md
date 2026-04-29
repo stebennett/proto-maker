@@ -1,7 +1,7 @@
 # proto-maker-server
 
 A tiny static-file HTTP server. Binds to `127.0.0.1` only. Used by the
-proto-maker `/preview` skill to serve a PM's ideas repo and persist
+proto-maker `$preview` skill to serve a PM's ideas repo and persist
 stakeholder annotations from the wireframe overlay.
 
 ## Endpoints

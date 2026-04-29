@@ -3,7 +3,7 @@ name: iterate-prototype
 description: Stage 6. Applies PM feedback to the chosen alternative. Snapshots the current state to .history/iter-N/, dispatches the Designer to rework, then Critic + User Advocate + Engineer to validate, then Designer to evolve once. Writes 05-iteration-log.md.
 ---
 
-# /iterate-prototype — stage 6: refine the winner
+# $iterate-prototype — stage 6: refine the winner
 
 ## Inputs
 
@@ -13,8 +13,8 @@ description: Stage 6. Applies PM feedback to the chosen alternative. Snapshots t
 
 ## Refuse if
 
-- `CHOSEN` missing or contains `none` → run `/review-prototypes`
-- `04-review-notes.md` missing → run `/review-prototypes`
+- `CHOSEN` missing or contains `none` → run `$review-prototypes`
+- `04-review-notes.md` missing → run `$review-prototypes`
 
 ## Process
 
@@ -73,5 +73,5 @@ append a blank line followed by the new `## Iteration N` block:
 
 Tell PM:
 "Iteration N applied. Snapshot of pre-iteration state: `.history/iter-N/`.
-Re-open the prototype in your browser to review. Run `/iterate-prototype`
-again for further changes, or `/write-user-stories` when ready to hand off."
+Re-open the prototype in your browser to review. Run `$iterate-prototype`
+again for further changes, or `$write-user-stories` when ready to hand off."

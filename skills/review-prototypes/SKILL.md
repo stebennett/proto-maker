@@ -3,7 +3,7 @@ name: review-prototypes
 description: Stage 5. Captures PM and stakeholder feedback on the built prototypes, picks a winning alternative (or 'none'), writes 04-review-notes.md and the CHOSEN pointer file.
 ---
 
-# /review-prototypes — stage 5: capture feedback, pick winner
+# $review-prototypes — stage 5: capture feedback, pick winner
 
 ## Inputs
 
@@ -12,7 +12,7 @@ description: Stage 5. Captures PM and stakeholder feedback on the built prototyp
 
 ## Refuse if
 
-- `03-prototypes/` missing (run `/build-prototypes`)
+- `03-prototypes/` missing (run `$build-prototypes`)
 
 ## Process
 
@@ -75,10 +75,10 @@ Also write `ideas/<slug>/03-prototypes/CHOSEN`:
 ## Done
 
 If chosen is `none`, tell PM:
-"None of the alternatives won. Suggested next step: re-run `/refine` to explore
-new angles, or `/iterate-prototype` if a small fix would salvage one of them."
+"None of the alternatives won. Suggested next step: re-run `$refine` to explore
+new angles, or `$iterate-prototype` if a small fix would salvage one of them."
 
 If chosen is a folder name, tell PM:
-"Winner recorded: `<folder>`. Next step: `/iterate-prototype` to refine the
-chosen prototype, or skip directly to `/write-user-stories` if it's
+"Winner recorded: `<folder>`. Next step: `$iterate-prototype` to refine the
+chosen prototype, or skip directly to `$write-user-stories` if it's
 ready as-is."

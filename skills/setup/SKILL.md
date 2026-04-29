@@ -3,11 +3,11 @@ name: setup
 description: One-time bootstrap of context/product.md, context/personas.md, context/constraints.md for a product. Walks the PM through a structured interview. Run once per product, not per idea. Required before any other proto-maker skill runs.
 ---
 
-# /setup — one-time product context bootstrap
+# $setup — one-time product context bootstrap
 
 ## When to use
 
-Run this once per product the PM works on, before invoking `/proto-maker` or
+Run this once per product the PM works on, before invoking `$proto-maker` or
 any other proto-maker skill for the first time in this ideas repo.
 
 ## What you do
@@ -76,5 +76,5 @@ section.
 ## Done
 
 When all three files pass validation, write:
-"Context setup complete. You can now run `/proto-maker` to start your first idea,
+"Context setup complete. You can now run `$proto-maker` to start your first idea,
 or invoke any individual stage skill directly."

@@ -3,7 +3,7 @@ name: document-scope
 description: Stage 3. Forces the PM to state hypothesis, success criteria, main risk, and personas served. Reads 01-alternatives.md. Writes 02-scope.md.
 ---
 
-# /document-scope — stage 3: hypothesis + criteria
+# $document-scope — stage 3: hypothesis + criteria
 
 ## Inputs
 
@@ -12,7 +12,7 @@ description: Stage 3. Forces the PM to state hypothesis, success criteria, main 
 
 ## Refuse if
 
-- `01-alternatives.md` missing (run `/refine`)
+- `01-alternatives.md` missing (run `$refine`)
 
 ## Verdict gate
 
@@ -21,7 +21,7 @@ description: Stage 3. Forces the PM to state hypothesis, success criteria, main 
    "The critic recommended killing this alternative space. Override and continue
    anyway? (yes/no)"
 3. If yes, record the override in the scope doc's frontmatter (`override_kill: true`).
-4. If no, suggest re-running `/explore` and stop.
+4. If no, suggest re-running `$explore` and stop.
 
 ## Process
 
@@ -80,4 +80,4 @@ override_kill: <true|false>
 
 ## Done
 
-Tell PM: "Scope locked to `02-scope.md`. Next step: `/build-prototypes`."
+Tell PM: "Scope locked to `02-scope.md`. Next step: `$build-prototypes`."

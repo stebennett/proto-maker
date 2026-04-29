@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship a tiny static-file HTTP server in Go that the `/preview` skill launches on the PM's machine. It serves the ideas repo, accepts annotation POSTs from the wireframe overlay, and cross-compiles to Windows, macOS, and Linux binaries.
+**Goal:** Ship a tiny static-file HTTP server in Go that the `$preview` skill launches on the PM's machine. It serves the ideas repo, accepts annotation POSTs from the wireframe overlay, and cross-compiles to Windows, macOS, and Linux binaries.
 
 **Architecture:** One Go process binding to `127.0.0.1` only. Three endpoints: `GET /__ping__` (liveness probe for the overlay's online/offline detection), `POST /<path>/annotations/*.json` (writes annotation JSON to disk under the configured root), and static file serving for everything else. Path-traversal attempts, absolute paths, and paths escaping the root are rejected before any disk write.
 
@@ -821,7 +821,7 @@ Write `server/README.md`:
 # proto-maker-server
 
 A tiny static-file HTTP server. Binds to `127.0.0.1` only. Used by the
-proto-maker `/preview` skill to serve a PM's ideas repo and persist
+proto-maker `$preview` skill to serve a PM's ideas repo and persist
 stakeholder annotations from the wireframe overlay.
 
 ## Endpoints
@@ -957,4 +957,4 @@ This is **Plan 1 of 4**. Remaining plans to be written:
 - **Plan 3:** Skills & agents (AGENTS.md + 11 skills + 4 subagent definitions + sample dogfood idea)
 - **Plan 4:** Installer & release tooling (install.sh, install.ps1, CI, release packaging)
 
-Plans 2 and 3 depend on this plan's completion (Plan 3's `/preview` skill launches this binary, Plan 2's annotations.js talks to these endpoints). Plan 4 depends on all three.
+Plans 2 and 3 depend on this plan's completion (Plan 3's `$preview` skill launches this binary, Plan 2's annotations.js talks to these endpoints). Plan 4 depends on all three.

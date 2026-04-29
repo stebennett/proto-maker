@@ -48,8 +48,8 @@ These were locked in during brainstorming. Full rationale + alternatives conside
 3. **Role-specialized subagents (Designer, Critic, User Advocate, Engineer) are the tension mechanism.** Don't collapse them into a single general-purpose subagent without re-raising the trade-off with Steve. (D4)
 4. **Clean minimal wireframe styling (Pico.css), not Balsamiq/sketchy.** Trade-off was knowingly accepted. (D6)
 5. **Unsigned binaries for v1.** Signing is v1.1. (D10)
-6. **`context/*.md` is required before any per-idea work runs.** `/setup` populates it; every other skill refuses to run without it. (D5)
-7. **Tension must live at BOTH `/refine` AND `/build-prototypes`.** Removing it from either stage undermines D4. (D9)
+6. **`context/*.md` is required before any per-idea work runs.** `$setup` populates it; every other skill refuses to run without it. (D5)
+7. **Tension must live at BOTH `$refine` AND `$build-prototypes`.** Removing it from either stage undermines D4. (D9)
 
 ## If you find yourself adding a new decision
 

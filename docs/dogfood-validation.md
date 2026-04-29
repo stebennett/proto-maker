@@ -34,7 +34,7 @@ And avoid all of:
 
 - Already-decided ideas. Proto-maker is for shaping ideas; it cannot course-correct what's already locked in.
 - Ideas with heavy backend or data dependencies. Wireframes cannot show those, and the Engineer subagent will flag everything as TBD, drowning the signal.
-- Ideas requiring new personas. Run `/setup` once with a stable persona set; don't blur the validation by also testing setup-of-personas.
+- Ideas requiring new personas. Run `$setup` once with a stable persona set; don't blur the validation by also testing setup-of-personas.
 
 ---
 
@@ -44,8 +44,8 @@ A meaningful dogfood needs at minimum:
 
 | Role | What they do | Notes |
 |---|---|---|
-| **PM (driver)** | Runs `/proto-maker`, answers the interviews, makes the calls. | Keeps a running log of awkward, slow, or surprising moments. |
-| **Stakeholder(s)** (≥1) | Review prototypes via `/preview`. Leave annotations via the `?` button. | Don't coach them. Send them the URL and let them figure out the overlay. Their first reaction is data. |
+| **PM (driver)** | Runs `$proto-maker`, answers the interviews, makes the calls. | Keeps a running log of awkward, slow, or surprising moments. |
+| **Stakeholder(s)** (≥1) | Review prototypes via `$preview`. Leave annotations via the `?` button. | Don't coach them. Send them the URL and let them figure out the overlay. Their first reaction is data. |
 | **Engineer** (1) | Receives `HANDOFF.md` + `handoff.zip`. Attempts to T-shirt-size the work. Reports what's missing for an estimate. | Should NOT have been involved in earlier stages — the handoff is the test. |
 
 Minimum viable: PM + 1 stakeholder + 1 engineer. Smaller (PM playing all three) is OK for a first pass but skews every signal toward the PM's mental model.
@@ -57,7 +57,7 @@ Minimum viable: PM + 1 stakeholder + 1 engineer. Smaller (PM playing all three) 
 - Use a fresh ideas repo: `mkdir -p ~/scratch/dogfood-real && cd ~/scratch/dogfood-real`. Don't reuse the canonical-test directory.
 - **Don't skip stages.** Even if a stage feels redundant, the test is the experience of all eight.
 - **Don't override the kill verdict** unless you have a concrete reason that you can articulate in one sentence. If the critic recommends `kill`, that is data; honour it the first time.
-- **Run `/iterate-prototype` at least once** even if the chosen alt feels ready. Otherwise stage 6 is unexercised.
+- **Run `$iterate-prototype` at least once** even if the chosen alt feels ready. Otherwise stage 6 is unexercised.
 - **Use real stakeholder feedback.** Don't paste the offline JSON yourself; let the stakeholder click through the prototype in their own browser, ideally on their own machine, and let them use either the `?` overlay (online) or paste their notes (offline).
 - **Record timing.** Per stage, note start time and elapsed time. Where did you wait?
 - **Record decisions.** Every place proto-maker offered a choice (slug? number of alternatives? alt names/angles? winner? iteration changes?), capture what you picked and a one-line *why*.
@@ -68,16 +68,16 @@ Minimum viable: PM + 1 stakeholder + 1 engineer. Smaller (PM playing all three) 
 
 | Stage | Skill | Watch for |
 |---|---|---|
-| 1 | `/setup` | Did the interviews pull out things you hadn't written down, or did you just type what you already had? Did any question feel out of place? |
-| 2 | `/explore` | Of the seven questions, did any feel redundant or missing? Were the answers easy to short-circuit? |
-| 3 | `/refine` | Are the three alternatives meaningfully distinct? Did the critic / user-advocate / engineer memos surface things you hadn't thought of, or restate the obvious? |
-| 4 | `/document-scope` | Does the hypothesis force a real commitment, or is "stakeholders like it" the tempting answer? |
-| 5 | `/build-prototypes` | Did the parallel designer dispatch produce three different prototypes, or three wireframes with the same skeleton and different labels? In the evolution round, did v2 differ from v1 in substance, not just polish? |
-| 6 | `/preview` | Does the local server start first try? Can a non-PM stakeholder use the `?` button without instruction? Did online mode persist annotations to disk where you expected? |
-| 7 | `/review-prototypes` | Does the per-alt review structure surface real differences? Could you articulate why the winner won? |
-| 8 | `/iterate-prototype` | Did the `.history/iter-1/` snapshot work? Did the rework address the feedback or just restyle? |
-| 9 | `/write-user-stories` | Are the stories estimable, or wishlists? Did the engineer's feasibility flag actually flag anything? |
-| 10 | `/handoff` | Does `HANDOFF.md` read like a real handoff or like an assembly of boilerplate? Could the engineer estimate without coming back to you? |
+| 1 | `$setup` | Did the interviews pull out things you hadn't written down, or did you just type what you already had? Did any question feel out of place? |
+| 2 | `$explore` | Of the seven questions, did any feel redundant or missing? Were the answers easy to short-circuit? |
+| 3 | `$refine` | Are the three alternatives meaningfully distinct? Did the critic / user-advocate / engineer memos surface things you hadn't thought of, or restate the obvious? |
+| 4 | `$document-scope` | Does the hypothesis force a real commitment, or is "stakeholders like it" the tempting answer? |
+| 5 | `$build-prototypes` | Did the parallel designer dispatch produce three different prototypes, or three wireframes with the same skeleton and different labels? In the evolution round, did v2 differ from v1 in substance, not just polish? |
+| 6 | `$preview` | Does the local server start first try? Can a non-PM stakeholder use the `?` button without instruction? Did online mode persist annotations to disk where you expected? |
+| 7 | `$review-prototypes` | Does the per-alt review structure surface real differences? Could you articulate why the winner won? |
+| 8 | `$iterate-prototype` | Did the `.history/iter-1/` snapshot work? Did the rework address the feedback or just restyle? |
+| 9 | `$write-user-stories` | Are the stories estimable, or wishlists? Did the engineer's feasibility flag actually flag anything? |
+| 10 | `$handoff` | Does `HANDOFF.md` read like a real handoff or like an assembly of boilerplate? Could the engineer estimate without coming back to you? |
 
 ---
 

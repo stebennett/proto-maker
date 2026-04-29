@@ -30,7 +30,7 @@ PMs at organizations where Codex CLI is available but developer tooling (git, np
 
 ```
 Plan 1 (server) ──┐
-                  ├─→ Plan 3 (skills — uses Plan 1 via /preview + Plan 2 via /build-prototypes)
+                  ├─→ Plan 3 (skills — uses Plan 1 via $preview + Plan 2 via $build-prototypes)
 Plan 2 (template)─┘                                                                              ──→ Plan 4 (installer — packages all of the above)
 ```
 
@@ -40,8 +40,8 @@ Plans 1 and 2 are independent and can run in parallel. Plan 3 needs both complet
 
 1. **Open AGENTS.md + Skills format** — portable across Codex CLI (primary), Claude Code (deferred to v1.1), and any future platform adopting the format. (Spec §3)
 2. **Role-specialized subagents** — Designer, Critic, User Advocate, Engineer. Creative tension is internalized rather than relying on the PM to produce it. (Spec §4.6)
-3. **Tension at TWO stages** — `/refine` (is this alternative worth building?) and `/build-prototypes` (does this prototype express the idea?). Spec §5.4, §5.5.
-4. **Context as first-class input** — `context/product.md`, `context/personas.md`, `context/constraints.md` are populated once per product via `/setup` and read by every stage. Without them, User Advocate and Engineer subagents have nothing to push back from. (Spec §3 critical gap #1)
+3. **Tension at TWO stages** — `$refine` (is this alternative worth building?) and `$build-prototypes` (does this prototype express the idea?). Spec §5.4, §5.5.
+4. **Context as first-class input** — `context/product.md`, `context/personas.md`, `context/constraints.md` are populated once per product via `$setup` and read by every stage. Without them, User Advocate and Engineer subagents have nothing to push back from. (Spec §3 critical gap #1)
 5. **No git, no dev tooling on PM machines** — installers use curl/Invoke-WebRequest, not git clone. Iteration history is `.history/iter-N/` filesystem snapshots. (Spec §8.3)
 6. **Clean minimal wireframes (Pico.css), not sketchy** — more credible with execs despite the design-drift risk. Steve made this call explicitly. (Spec §6.3)
 7. **Go microserver, cross-compiled, unsigned v1** — single binary per platform; documented SmartScreen / Gatekeeper workaround for v1. (Spec §7)

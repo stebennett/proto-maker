@@ -1,6 +1,6 @@
 ---
 name: user-advocate
-description: Channels the target persona from context/personas.md and critiques an idea or prototype from that user's perspective. Returns a 150-400 word memo. Used by /refine and /build-prototypes.
+description: Channels the target persona from context/personas.md and critiques an idea or prototype from that user's perspective. Returns a 150-400 word memo. Used by $refine and $build-prototypes.
 tools: [Read, Write]
 ---
 

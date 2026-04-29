@@ -3,7 +3,7 @@ name: handoff
 description: Stage 8. Assembles HANDOFF.md (table of contents + exec summary) and packages the entire idea folder into handoff.zip for engineering. Reads all prior artifacts.
 ---
 
-# /handoff — stage 8: package for engineering
+# $handoff — stage 8: package for engineering
 
 ## Inputs
 

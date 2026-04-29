@@ -78,6 +78,6 @@ if ($UserPath -notlike "*$BinDir*") {
 }
 
 Write-Host ""
-Write-Host "Done. Open Codex CLI in a new terminal and try: /setup"
+Write-Host 'Done. Open Codex CLI in a new terminal and try: $setup'
 Write-Host ""
 Write-Host "If Windows SmartScreen blocked this script, see README.md for the bypass."

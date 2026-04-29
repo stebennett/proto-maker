@@ -149,7 +149,7 @@ case ":$PATH:" in
 esac
 
 echo ""
-echo "Done. Open Codex CLI and try: /setup"
+echo "Done. Open Codex CLI and try: $setup"
 ```
 
 - [ ] **Step 2: Make executable**
@@ -257,7 +257,7 @@ if ($UserPath -notlike "*$BinDir*") {
 }
 
 Write-Host ""
-Write-Host "Done. Open Codex CLI in a new terminal and try: /setup"
+Write-Host "Done. Open Codex CLI in a new terminal and try: $setup"
 Write-Host ""
 Write-Host "If Windows SmartScreen blocked this script, see README.md for the bypass."
 ```
@@ -540,7 +540,7 @@ Turn a PM's raw idea into an engineering-ready handoff. Ships as a set of open-f
    - Click **Run anyway**.
    - This is expected — proto-maker is unsigned in v1. See [Signing note](#signing-note-v1).
 6. Restart your terminal.
-7. Open Codex CLI and type `/setup`.
+7. Open Codex CLI and type `$setup`.
 
 ### macOS
 
@@ -553,7 +553,7 @@ Turn a PM's raw idea into an engineering-ready handoff. Ships as a set of open-f
    - Scroll down; click **Allow Anyway** next to `proto-maker-server`.
    - Alternative: run `xattr -d com.apple.quarantine ~/.local/bin/proto-maker-server` once.
 6. Ensure `~/.local/bin` is on your PATH (the installer prints instructions if not).
-7. Open Codex CLI and type `/setup`.
+7. Open Codex CLI and type `$setup`.
 
 ### Linux
 
@@ -561,23 +561,23 @@ Turn a PM's raw idea into an engineering-ready handoff. Ships as a set of open-f
 2. Extract: `unzip proto-maker-*-linux-amd64.zip`
 3. Run: `bash install.sh`
 4. Ensure `~/.local/bin` is on your PATH.
-5. Open Codex CLI and type `/setup`.
+5. Open Codex CLI and type `$setup`.
 
 ## Quick start
 
 After install:
 
 ```
-/setup        # one-time: populate your product context (run once per product)
-/proto-maker  # start a new idea, walks you through stages 1-8
+$setup        # one-time: populate your product context (run once per product)
+$proto-maker  # start a new idea, walks you through stages 1-8
 ```
 
-At any point, you can jump to an individual stage: `/explore`, `/refine`, `/document-scope`, `/build-prototypes`, `/review-prototypes`, `/iterate-prototype`, `/write-user-stories`, `/handoff`. Stage skills refuse to run without their required inputs, so you can't get out of order.
+At any point, you can jump to an individual stage: `$explore`, `$refine`, `$document-scope`, `$build-prototypes`, `$review-prototypes`, `$iterate-prototype`, `$write-user-stories`, `$handoff`. Stage skills refuse to run without their required inputs, so you can't get out of order.
 
 To preview prototypes in a browser:
 
 ```
-/preview      # starts the local server on http://127.0.0.1:4788
+$preview      # starts the local server on http://127.0.0.1:4788
 ```
 
 ## What you produce
@@ -794,8 +794,8 @@ installer: install-verify.sh sandbox integration test
 installer: package per-platform release zips ...
 installer: install.ps1 for Windows ...
 installer: install.sh for macOS and Linux
-skills: /proto-maker master orchestrator ...
-skills: /handoff ...
+skills: $proto-maker master orchestrator ...
+skills: $handoff ...
 ... (remaining skills and agents from Plan 3)
 template: ... (Plan 2)
 server: ... (Plan 1)

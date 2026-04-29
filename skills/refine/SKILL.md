@@ -3,7 +3,7 @@ name: refine
 description: Stage 2. Generates 2-4 candidate alternatives for the explored idea, dispatches Critic, User Advocate, and Engineer subagents to attack the alternatives, synthesizes a verdict (proceed/revise/kill). Reads 00-exploration.md. Writes 01-alternatives.md.
 ---
 
-# /refine — stage 2: alternatives + verdict
+# $refine — stage 2: alternatives + verdict
 
 ## Inputs
 
@@ -12,8 +12,8 @@ description: Stage 2. Generates 2-4 candidate alternatives for the explored idea
 
 ## Refuse if
 
-- `context/` empty (run `/setup`)
-- `00-exploration.md` missing (run `/explore`)
+- `context/` empty (run `$setup`)
+- `00-exploration.md` missing (run `$explore`)
 
 ## Process
 
@@ -75,10 +75,10 @@ the `^recommendation:` line:
 
 8. If verdict is `kill`, tell the PM:
    "The critic recommends killing this alternative space. Read the memo and
-   decide: (a) revise this idea via `/explore` again, (b) override the verdict
-   and continue with `/document-scope`, or (c) abandon."
+   decide: (a) revise this idea via `$explore` again, (b) override the verdict
+   and continue with `$document-scope`, or (c) abandon."
 
 ## Done
 
 Tell PM: "Alternatives written to `01-alternatives.md`. Verdict: <verdict>.
-Next step: `/document-scope`."
+Next step: `$document-scope`."

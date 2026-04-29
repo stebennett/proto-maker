@@ -13,7 +13,7 @@ Calibrate every interaction to a non-technical audience:
 - No code in PM-facing prompts unless the PM explicitly asks.
 - No mention of git, GitHub, npm, pip, gh, docker, or any other developer tool.
 - No "run this command" instructions for anything beyond Codex slash commands
-  that proto-maker itself defines (e.g., `/proto-maker`, `/explore`).
+  that proto-maker itself defines (e.g., `$proto-maker`, `$explore`).
 - Use plain language. Define jargon when it appears.
 
 ## Forbidden actions
@@ -35,9 +35,9 @@ Before doing ANY work for the PM:
 1. Check that `context/product.md`, `context/personas.md`, `context/constraints.md`
    exist and are non-empty.
 2. If any are missing or empty, refuse to proceed and tell the PM:
-   "Your product context is empty. Run `/setup` to populate it before continuing."
+   "Your product context is empty. Run `$setup` to populate it before continuing."
 
-The only skill exempt from this gate is `/setup` itself.
+The only skill exempt from this gate is `$setup` itself.
 
 ## The pipeline
 
@@ -46,17 +46,17 @@ proceeds through 8 stages:
 
 | # | Skill | Output |
 |---|---|---|
-| 1 | `/explore` | `00-exploration.md` |
-| 2 | `/refine` | `01-alternatives.md` (with verdict block) |
-| 3 | `/document-scope` | `02-scope.md` (hypothesis + criteria) |
-| 4 | `/build-prototypes` | `03-prototypes/alt-*/` + `index.html` |
-| 5 | `/review-prototypes` | `04-review-notes.md` + `03-prototypes/CHOSEN` |
-| 6 | `/iterate-prototype` | updated alt + `05-iteration-log.md` |
-| 7 | `/write-user-stories` | `06-user-stories.md` |
-| 8 | `/handoff` | `HANDOFF.md` + `handoff.zip` |
+| 1 | `$explore` | `00-exploration.md` |
+| 2 | `$refine` | `01-alternatives.md` (with verdict block) |
+| 3 | `$document-scope` | `02-scope.md` (hypothesis + criteria) |
+| 4 | `$build-prototypes` | `03-prototypes/alt-*/` + `index.html` |
+| 5 | `$review-prototypes` | `04-review-notes.md` + `03-prototypes/CHOSEN` |
+| 6 | `$iterate-prototype` | updated alt + `05-iteration-log.md` |
+| 7 | `$write-user-stories` | `06-user-stories.md` |
+| 8 | `$handoff` | `HANDOFF.md` + `handoff.zip` |
 
-Plus three utility skills: `/proto-maker` (walks 1→8), `/setup` (one-time
-context bootstrap), `/preview` (start local server).
+Plus three utility skills: `$proto-maker` (walks 1→8), `$setup` (one-time
+context bootstrap), `$preview` (start local server).
 
 ## Artifact conventions
 

@@ -3,7 +3,7 @@ name: build-prototypes
 description: Stage 4. Generates N (default 3) wireframe alternatives in parallel via the Designer subagent, then dispatches Critic + User Advocate + Engineer per alternative for parallel critique, then asks the Designer to evolve each. Writes 03-prototypes/alt-*/ + index.html landing page.
 ---
 
-# /build-prototypes — stage 4: parallel prototype generation with critique evolution
+# $build-prototypes — stage 4: parallel prototype generation with critique evolution
 
 ## Inputs
 
@@ -12,7 +12,7 @@ description: Stage 4. Generates N (default 3) wireframe alternatives in parallel
 
 ## Refuse if
 
-- `02-scope.md` missing (run `/document-scope`)
+- `02-scope.md` missing (run `$document-scope`)
 
 ## Vendoring assets (one-time per ideas repo)
 
@@ -99,7 +99,7 @@ After completion, the folder structure is:
 
 Tell PM:
 "Prototypes built. To review:
-1. Run `/preview` to start the local server (if not already running).
+1. Run `$preview` to start the local server (if not already running).
 2. Open http://127.0.0.1:4788/ideas/<slug>/03-prototypes/index.html
 3. Click through each alternative.
-4. When ready, run `/review-prototypes` to capture feedback and pick a winner."
+4. When ready, run `$review-prototypes` to capture feedback and pick a winner."

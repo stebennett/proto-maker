@@ -57,17 +57,17 @@ Plan: `docs/superpowers/plans/2026-04-24-proto-maker-skills.md`
 - [x] Task 3: Critic subagent
 - [x] Task 4: User Advocate subagent
 - [x] Task 5: Engineer subagent
-- [x] Task 6: /setup skill
-- [x] Task 7: /preview skill
-- [x] Task 8: /explore skill (stage 1)
-- [x] Task 9: /refine skill (stage 2)
-- [x] Task 10: /document-scope skill (stage 3)
-- [x] Task 11: /build-prototypes skill (stage 4)
-- [x] Task 12: /review-prototypes skill (stage 5)
-- [x] Task 13: /iterate-prototype skill (stage 6)
-- [x] Task 14: /write-user-stories skill (stage 7)
-- [x] Task 15: /handoff skill (stage 8)
-- [x] Task 16: /proto-maker master skill
+- [x] Task 6: $setup skill
+- [x] Task 7: $preview skill
+- [x] Task 8: $explore skill (stage 1)
+- [x] Task 9: $refine skill (stage 2)
+- [x] Task 10: $document-scope skill (stage 3)
+- [x] Task 11: $build-prototypes skill (stage 4)
+- [x] Task 12: $review-prototypes skill (stage 5)
+- [x] Task 13: $iterate-prototype skill (stage 6)
+- [x] Task 14: $write-user-stories skill (stage 7)
+- [x] Task 15: $handoff skill (stage 8)
+- [x] Task 16: $proto-maker master skill
 - [x] Task 17: Contract test infrastructure
 - [x] Task 18: Dogfood walkthrough doc
 

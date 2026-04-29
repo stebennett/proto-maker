@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown with YAML frontmatter. No code. Contract tests are bash scripts that grep / parse output artifacts. Dogfood verification is a manual end-to-end walkthrough.
 
-**Depends on:** Plan 1 (server) for `/preview`, Plan 2 (template) for `/build-prototypes` and `/iterate-prototype`.
+**Depends on:** Plan 1 (server) for `$preview`, Plan 2 (template) for `$build-prototypes` and `$iterate-prototype`.
 
 ---
 
@@ -25,7 +25,7 @@
 - Installation logic that places these files in Codex's discovery path (Plan 4)
 - Sample idea ARTIFACTS (those are produced by running the skills end-to-end during dogfood)
 
-**End state of this plan:** A developer with Codex CLI installed and the proto-maker source linked into Codex's user-skills directory can run `/setup` and then `/proto-maker` against the canned sample idea and produce a complete, valid `HANDOFF.md` + `handoff.zip`. All contract-test assertions pass on the produced artifacts.
+**End state of this plan:** A developer with Codex CLI installed and the proto-maker source linked into Codex's user-skills directory can run `$setup` and then `$proto-maker` against the canned sample idea and produce a complete, valid `HANDOFF.md` + `handoff.zip`. All contract-test assertions pass on the produced artifacts.
 
 ---
 
@@ -59,7 +59,7 @@ docs/
 ```
 
 **Boundaries:**
-- Skills never call other skills directly. The `/proto-maker` master orchestrator coordinates by *suggesting* the next skill to the PM, who runs it explicitly. This keeps each skill standalone-runnable.
+- Skills never call other skills directly. The `$proto-maker` master orchestrator coordinates by *suggesting* the next skill to the PM, who runs it explicitly. This keeps each skill standalone-runnable.
 - Subagents are dispatched from skills via the agent platform's mechanism (in Codex, the subagent invocation tool). Each subagent has its own context window and returns a constrained-shape output.
 - AGENTS.md is the only file that influences EVERY interaction. Skills override or extend its rules in their narrower scope.
 
@@ -90,7 +90,7 @@ Calibrate every interaction to a non-technical audience:
 - No code in PM-facing prompts unless the PM explicitly asks.
 - No mention of git, GitHub, npm, pip, gh, docker, or any other developer tool.
 - No "run this command" instructions for anything beyond Codex slash commands
-  that proto-maker itself defines (e.g., `/proto-maker`, `/explore`).
+  that proto-maker itself defines (e.g., `$proto-maker`, `$explore`).
 - Use plain language. Define jargon when it appears.
 
 ## Forbidden actions
@@ -112,9 +112,9 @@ Before doing ANY work for the PM:
 1. Check that `context/product.md`, `context/personas.md`, `context/constraints.md`
    exist and are non-empty.
 2. If any are missing or empty, refuse to proceed and tell the PM:
-   "Your product context is empty. Run `/setup` to populate it before continuing."
+   "Your product context is empty. Run `$setup` to populate it before continuing."
 
-The only skill exempt from this gate is `/setup` itself.
+The only skill exempt from this gate is `$setup` itself.
 
 ## The pipeline
 
@@ -123,17 +123,17 @@ proceeds through 8 stages:
 
 | # | Skill | Output |
 |---|---|---|
-| 1 | `/explore` | `00-exploration.md` |
-| 2 | `/refine` | `01-alternatives.md` (with verdict block) |
-| 3 | `/document-scope` | `02-scope.md` (hypothesis + criteria) |
-| 4 | `/build-prototypes` | `03-prototypes/alt-*/` + `index.html` |
-| 5 | `/review-prototypes` | `04-review-notes.md` + `03-prototypes/CHOSEN` |
-| 6 | `/iterate-prototype` | updated alt + `05-iteration-log.md` |
-| 7 | `/write-user-stories` | `06-user-stories.md` |
-| 8 | `/handoff` | `HANDOFF.md` + `handoff.zip` |
+| 1 | `$explore` | `00-exploration.md` |
+| 2 | `$refine` | `01-alternatives.md` (with verdict block) |
+| 3 | `$document-scope` | `02-scope.md` (hypothesis + criteria) |
+| 4 | `$build-prototypes` | `03-prototypes/alt-*/` + `index.html` |
+| 5 | `$review-prototypes` | `04-review-notes.md` + `03-prototypes/CHOSEN` |
+| 6 | `$iterate-prototype` | updated alt + `05-iteration-log.md` |
+| 7 | `$write-user-stories` | `06-user-stories.md` |
+| 8 | `$handoff` | `HANDOFF.md` + `handoff.zip` |
 
-Plus three utility skills: `/proto-maker` (walks 1→8), `/setup` (one-time
-context bootstrap), `/preview` (start local server).
+Plus three utility skills: `$proto-maker` (walks 1→8), `$setup` (one-time
+context bootstrap), `$preview` (start local server).
 
 ## Artifact conventions
 
@@ -208,7 +208,7 @@ Write `agents/designer.md`:
 ```markdown
 ---
 name: designer
-description: Produces wireframe HTML for a single prototype alternative. Reads context, scope, and (in critique rounds) peer critique memos. Returns wireframe screen files plus a contribution to DESIGN-LOG.md. Used by /build-prototypes and /iterate-prototype.
+description: Produces wireframe HTML for a single prototype alternative. Reads context, scope, and (in critique rounds) peer critique memos. Returns wireframe screen files plus a contribution to DESIGN-LOG.md. Used by $build-prototypes and $iterate-prototype.
 tools: [Read, Write, Bash]
 ---
 
@@ -242,7 +242,7 @@ missing, return: `MISSING INPUT: <filename>` and stop.
 
 1. Decide the screens needed to express the assigned angle. Aim for 3–7 screens.
 2. Copy `pico.min.css`, `components.css`, `annotations.js` from
-   `<ideas-repo>/.proto-maker-assets/` (already vendored by `/build-prototypes`).
+   `<ideas-repo>/.proto-maker-assets/` (already vendored by `$build-prototypes`).
 3. Write `index.html` (landing page for this alternative — links to all screens).
 4. Write `screen-*.html` for each screen, using the template at
    `templates/wireframe-base/index.html` as a starting point. Replace placeholder
@@ -303,7 +303,7 @@ Write `agents/critic.md`:
 ```markdown
 ---
 name: critic
-description: Challenges the premise, scope, and hidden assumptions of an idea or prototype. Returns a 150-400 word memo. Used by /refine (verdict authority on alternatives) and /build-prototypes (per-alternative critique).
+description: Challenges the premise, scope, and hidden assumptions of an idea or prototype. Returns a 150-400 word memo. Used by $refine (verdict authority on alternatives) and $build-prototypes (per-alternative critique).
 tools: [Read, Write]
 ---
 
@@ -313,15 +313,15 @@ tools: [Read, Write]
 
 You are the project's devil's advocate. Your job is to make the IDEA defensible,
 not to make the prototype prettier. You ask: "Is this the right thing to build?
-Are we sure?" You have the authority — in `/refine` — to recommend killing an
+Are we sure?" You have the authority — in `$refine` — to recommend killing an
 alternative entirely.
 
 ## Inputs
 
 You will be given the relevant files for the stage you're invoked from:
-- `/refine`: `context/*`, `00-exploration.md`, AND a candidate-alternatives summary.
-- `/build-prototypes`: `context/*`, `02-scope.md`, AND `index.html` + screens for one alternative.
-- `/iterate-prototype`: same as build-prototypes plus `04-review-notes.md` and the v1 it's iterating from.
+- `$refine`: `context/*`, `00-exploration.md`, AND a candidate-alternatives summary.
+- `$build-prototypes`: `context/*`, `02-scope.md`, AND `index.html` + screens for one alternative.
+- `$iterate-prototype`: same as build-prototypes plus `04-review-notes.md` and the v1 it's iterating from.
 
 ## Output format (strict)
 
@@ -344,7 +344,7 @@ concern made useful.
 What is this idea NOT saying that it should? Assumed user behaviors, ignored
 edge cases, missing failure modes.
 
-## Recommendation (only when invoked from /refine)
+## Recommendation (only when invoked from $refine)
 \`\`\`yaml
 recommendation: proceed | revise | kill
 justification: |
@@ -382,7 +382,7 @@ Write `agents/user-advocate.md`:
 ```markdown
 ---
 name: user-advocate
-description: Channels the target persona from context/personas.md and critiques an idea or prototype from that user's perspective. Returns a 150-400 word memo. Used by /refine and /build-prototypes.
+description: Channels the target persona from context/personas.md and critiques an idea or prototype from that user's perspective. Returns a 150-400 word memo. Used by $refine and $build-prototypes.
 tools: [Read, Write]
 ---
 
@@ -467,7 +467,7 @@ Write `agents/engineer.md`:
 ```markdown
 ---
 name: engineer
-description: Critiques an idea or prototype from a feasibility perspective. Reads context/constraints.md and identifies handwaving, hidden technical complexity, and TBD markers. Returns a 150-400 word memo. Used by /refine, /build-prototypes, /iterate-prototype, /write-user-stories.
+description: Critiques an idea or prototype from a feasibility perspective. Reads context/constraints.md and identifies handwaving, hidden technical complexity, and TBD markers. Returns a 150-400 word memo. Used by $refine, $build-prototypes, $iterate-prototype, $write-user-stories.
 tools: [Read, Write, Bash]
 ---
 
@@ -485,7 +485,7 @@ implementation plan — that's later. You are surfacing risk.
 You will be given:
 - `context/constraints.md` (REQUIRED)
 - The artifact under critique (alternative summary, prototype HTML files, scope doc)
-- (For `/write-user-stories` only) The chosen prototype's HTML and the draft user stories
+- (For `$write-user-stories` only) The chosen prototype's HTML and the draft user stories
 
 ## What to read first
 
@@ -535,7 +535,7 @@ git commit -m "agents: engineer subagent — feasibility critique with TBD class
 
 ---
 
-## Task 6: /setup skill
+## Task 6: $setup skill
 
 **Files:**
 - Create: `skills/setup/SKILL.md`
@@ -550,11 +550,11 @@ name: setup
 description: One-time bootstrap of context/product.md, context/personas.md, context/constraints.md for a product. Walks the PM through a structured interview. Run once per product, not per idea. Required before any other proto-maker skill runs.
 ---
 
-# /setup — one-time product context bootstrap
+# $setup — one-time product context bootstrap
 
 ## When to use
 
-Run this once per product the PM works on, before invoking `/proto-maker` or
+Run this once per product the PM works on, before invoking `$proto-maker` or
 any other proto-maker skill for the first time in this ideas repo.
 
 ## What you do
@@ -623,7 +623,7 @@ section.
 ## Done
 
 When all three files pass validation, write:
-"Context setup complete. You can now run `/proto-maker` to start your first idea,
+"Context setup complete. You can now run `$proto-maker` to start your first idea,
 or invoke any individual stage skill directly."
 ```
 
@@ -631,12 +631,12 @@ or invoke any individual stage skill directly."
 
 ```bash
 git add skills/setup/SKILL.md
-git commit -m "skills: /setup — one-time context bootstrap interview"
+git commit -m "skills: $setup — one-time context bootstrap interview"
 ```
 
 ---
 
-## Task 7: /preview skill
+## Task 7: $preview skill
 
 **Files:**
 - Create: `skills/preview/SKILL.md`
@@ -651,7 +651,7 @@ name: preview
 description: Starts the local proto-maker-server in the background so the wireframe overlay can persist annotations to disk. Idempotent. Run once per Codex session before reviewing prototypes in the browser.
 ---
 
-# /preview — start the local prototype server
+# $preview — start the local prototype server
 
 ## When to use
 
@@ -674,7 +674,7 @@ overlay falls back to offline mode (localStorage + clipboard).
    \`\`\`
    If empty, tell the PM:
    "I can't find the proto-maker-server binary. Reinstall proto-maker
-   (rerun the installer you used originally). Then try `/preview` again."
+   (rerun the installer you used originally). Then try `$preview` again."
    Stop.
 
 3. Start the server in the background, rooted at the current working directory:
@@ -716,12 +716,12 @@ then 4790, up to 4798. Report the actual URL used.
 
 ```bash
 git add skills/preview/SKILL.md
-git commit -m "skills: /preview — local server lifecycle management"
+git commit -m "skills: $preview — local server lifecycle management"
 ```
 
 ---
 
-## Task 8: /explore skill (stage 1)
+## Task 8: $explore skill (stage 1)
 
 **Files:**
 - Create: `skills/explore/SKILL.md`
@@ -736,7 +736,7 @@ name: explore
 description: Stage 1. Captures the PM's raw idea via a structured exploration interview. Reads context/. Writes ideas/<slug>/00-exploration.md.
 ---
 
-# /explore — stage 1: idea exploration
+# $explore — stage 1: idea exploration
 
 ## Inputs
 
@@ -745,7 +745,7 @@ description: Stage 1. Captures the PM's raw idea via a structured exploration in
 
 ## Refuse if
 
-- `context/` is missing or any file is empty → tell PM to run `/setup`.
+- `context/` is missing or any file is empty → tell PM to run `$setup`.
 
 ## Process
 
@@ -808,19 +808,19 @@ inputs: [context/]
 ## Done
 
 Tell PM: "Exploration captured to `ideas/<slug>/00-exploration.md`. When ready
-to refine, run `/refine` or `/proto-maker` to continue the pipeline."
+to refine, run `$refine` or `$proto-maker` to continue the pipeline."
 ```
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add skills/explore/SKILL.md
-git commit -m "skills: /explore — stage 1 idea exploration interview"
+git commit -m "skills: $explore — stage 1 idea exploration interview"
 ```
 
 ---
 
-## Task 9: /refine skill (stage 2)
+## Task 9: $refine skill (stage 2)
 
 **Files:**
 - Create: `skills/refine/SKILL.md`
@@ -835,7 +835,7 @@ name: refine
 description: Stage 2. Generates 2-4 candidate alternatives for the explored idea, dispatches Critic, User Advocate, and Engineer subagents to attack the alternatives, synthesizes a verdict (proceed/revise/kill). Reads 00-exploration.md. Writes 01-alternatives.md.
 ---
 
-# /refine — stage 2: alternatives + verdict
+# $refine — stage 2: alternatives + verdict
 
 ## Inputs
 
@@ -844,8 +844,8 @@ description: Stage 2. Generates 2-4 candidate alternatives for the explored idea
 
 ## Refuse if
 
-- `context/` empty (run `/setup`)
-- `00-exploration.md` missing (run `/explore`)
+- `context/` empty (run `$setup`)
+- `00-exploration.md` missing (run `$explore`)
 
 ## Process
 
@@ -902,25 +902,25 @@ justification: |
 
 8. If verdict is `kill`, tell the PM:
    "The critic recommends killing this alternative space. Read the memo and
-   decide: (a) revise this idea via `/explore` again, (b) override the verdict
-   and continue with `/document-scope`, or (c) abandon."
+   decide: (a) revise this idea via `$explore` again, (b) override the verdict
+   and continue with `$document-scope`, or (c) abandon."
 
 ## Done
 
 Tell PM: "Alternatives written to `01-alternatives.md`. Verdict: <verdict>.
-Next step: `/document-scope`."
+Next step: `$document-scope`."
 ```
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add skills/refine/SKILL.md
-git commit -m "skills: /refine — stage 2 alternatives with parallel critic dispatch + verdict"
+git commit -m "skills: $refine — stage 2 alternatives with parallel critic dispatch + verdict"
 ```
 
 ---
 
-## Task 10: /document-scope skill (stage 3)
+## Task 10: $document-scope skill (stage 3)
 
 **Files:**
 - Create: `skills/document-scope/SKILL.md`
@@ -935,7 +935,7 @@ name: document-scope
 description: Stage 3. Forces the PM to state hypothesis, success criteria, main risk, and personas served. Reads 01-alternatives.md. Writes 02-scope.md.
 ---
 
-# /document-scope — stage 3: hypothesis + criteria
+# $document-scope — stage 3: hypothesis + criteria
 
 ## Inputs
 
@@ -944,7 +944,7 @@ description: Stage 3. Forces the PM to state hypothesis, success criteria, main 
 
 ## Refuse if
 
-- `01-alternatives.md` missing (run `/refine`)
+- `01-alternatives.md` missing (run `$refine`)
 
 ## Verdict gate
 
@@ -953,7 +953,7 @@ description: Stage 3. Forces the PM to state hypothesis, success criteria, main 
    "The critic recommended killing this alternative space. Override and continue
    anyway? (yes/no)"
 3. If yes, record the override in the scope doc's frontmatter (`override_kill: true`).
-4. If no, suggest re-running `/explore` and stop.
+4. If no, suggest re-running `$explore` and stop.
 
 ## Process
 
@@ -1012,19 +1012,19 @@ override_kill: <true|false>
 
 ## Done
 
-Tell PM: "Scope locked to `02-scope.md`. Next step: `/build-prototypes`."
+Tell PM: "Scope locked to `02-scope.md`. Next step: `$build-prototypes`."
 ```
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add skills/document-scope/SKILL.md
-git commit -m "skills: /document-scope — stage 3 hypothesis + criteria"
+git commit -m "skills: $document-scope — stage 3 hypothesis + criteria"
 ```
 
 ---
 
-## Task 11: /build-prototypes skill (stage 4)
+## Task 11: $build-prototypes skill (stage 4)
 
 **Files:**
 - Create: `skills/build-prototypes/SKILL.md`
@@ -1039,7 +1039,7 @@ name: build-prototypes
 description: Stage 4. Generates N (default 3) wireframe alternatives in parallel via the Designer subagent, then dispatches Critic + User Advocate + Engineer per alternative for parallel critique, then asks the Designer to evolve each. Writes 03-prototypes/alt-*/ + index.html landing page.
 ---
 
-# /build-prototypes — stage 4: parallel prototype generation with critique evolution
+# $build-prototypes — stage 4: parallel prototype generation with critique evolution
 
 ## Inputs
 
@@ -1048,7 +1048,7 @@ description: Stage 4. Generates N (default 3) wireframe alternatives in parallel
 
 ## Refuse if
 
-- `02-scope.md` missing (run `/document-scope`)
+- `02-scope.md` missing (run `$document-scope`)
 
 ## Vendoring assets (one-time per ideas repo)
 
@@ -1135,22 +1135,22 @@ After completion, the folder structure is:
 
 Tell PM:
 "Prototypes built. To review:
-1. Run `/preview` to start the local server (if not already running).
+1. Run `$preview` to start the local server (if not already running).
 2. Open http://127.0.0.1:4788/ideas/<slug>/03-prototypes/index.html
 3. Click through each alternative.
-4. When ready, run `/review-prototypes` to capture feedback and pick a winner."
+4. When ready, run `$review-prototypes` to capture feedback and pick a winner."
 ```
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add skills/build-prototypes/SKILL.md
-git commit -m "skills: /build-prototypes — stage 4 with parallel designer + critique + evolution"
+git commit -m "skills: $build-prototypes — stage 4 with parallel designer + critique + evolution"
 ```
 
 ---
 
-## Task 12: /review-prototypes skill (stage 5)
+## Task 12: $review-prototypes skill (stage 5)
 
 **Files:**
 - Create: `skills/review-prototypes/SKILL.md`
@@ -1165,7 +1165,7 @@ name: review-prototypes
 description: Stage 5. Captures PM and stakeholder feedback on the built prototypes, picks a winning alternative (or 'none'), writes 04-review-notes.md and the CHOSEN pointer file.
 ---
 
-# /review-prototypes — stage 5: capture feedback, pick winner
+# $review-prototypes — stage 5: capture feedback, pick winner
 
 ## Inputs
 
@@ -1174,7 +1174,7 @@ description: Stage 5. Captures PM and stakeholder feedback on the built prototyp
 
 ## Refuse if
 
-- `03-prototypes/` missing (run `/build-prototypes`)
+- `03-prototypes/` missing (run `$build-prototypes`)
 
 ## Process
 
@@ -1237,12 +1237,12 @@ Also write `ideas/<slug>/03-prototypes/CHOSEN`:
 ## Done
 
 If chosen is `none`, tell PM:
-"None of the alternatives won. Suggested next step: re-run `/refine` to explore
-new angles, or `/iterate-prototype` if a small fix would salvage one of them."
+"None of the alternatives won. Suggested next step: re-run `$refine` to explore
+new angles, or `$iterate-prototype` if a small fix would salvage one of them."
 
 If chosen is a folder name, tell PM:
-"Winner recorded: `<folder>`. Next step: `/iterate-prototype` to refine the
-chosen prototype, or skip directly to `/write-user-stories` if it's
+"Winner recorded: `<folder>`. Next step: `$iterate-prototype` to refine the
+chosen prototype, or skip directly to `$write-user-stories` if it's
 ready as-is."
 ```
 
@@ -1250,12 +1250,12 @@ ready as-is."
 
 ```bash
 git add skills/review-prototypes/SKILL.md
-git commit -m "skills: /review-prototypes — stage 5 review + CHOSEN pointer"
+git commit -m "skills: $review-prototypes — stage 5 review + CHOSEN pointer"
 ```
 
 ---
 
-## Task 13: /iterate-prototype skill (stage 6)
+## Task 13: $iterate-prototype skill (stage 6)
 
 **Files:**
 - Create: `skills/iterate-prototype/SKILL.md`
@@ -1270,7 +1270,7 @@ name: iterate-prototype
 description: Stage 6. Applies PM feedback to the chosen alternative. Snapshots the current state to .history/iter-N/, dispatches the Designer to rework, then Critic + User Advocate + Engineer to validate, then Designer to evolve once. Writes 05-iteration-log.md.
 ---
 
-# /iterate-prototype — stage 6: refine the winner
+# $iterate-prototype — stage 6: refine the winner
 
 ## Inputs
 
@@ -1280,8 +1280,8 @@ description: Stage 6. Applies PM feedback to the chosen alternative. Snapshots t
 
 ## Refuse if
 
-- `CHOSEN` missing or contains `none` → run `/review-prototypes`
-- `04-review-notes.md` missing → run `/review-prototypes`
+- `CHOSEN` missing or contains `none` → run `$review-prototypes`
+- `04-review-notes.md` missing → run `$review-prototypes`
 
 ## Process
 
@@ -1328,20 +1328,20 @@ inputs: [CHOSEN, 04-review-notes.md, .history/]
 
 Tell PM:
 "Iteration N applied. Snapshot of pre-iteration state: `.history/iter-N/`.
-Re-open the prototype in your browser to review. Run `/iterate-prototype`
-again for further changes, or `/write-user-stories` when ready to hand off."
+Re-open the prototype in your browser to review. Run `$iterate-prototype`
+again for further changes, or `$write-user-stories` when ready to hand off."
 ```
 
 - [ ] **Step 2: Commit**
 
 ```bash
 git add skills/iterate-prototype/SKILL.md
-git commit -m "skills: /iterate-prototype — stage 6 with .history/ snapshots"
+git commit -m "skills: $iterate-prototype — stage 6 with .history/ snapshots"
 ```
 
 ---
 
-## Task 14: /write-user-stories skill (stage 7)
+## Task 14: $write-user-stories skill (stage 7)
 
 **Files:**
 - Create: `skills/write-user-stories/SKILL.md`
@@ -1356,7 +1356,7 @@ name: write-user-stories
 description: Stage 7. Reads the chosen prototype + scope + TBDs, drafts user stories in conventional markdown format, dispatches Engineer to sanity-check feasibility. Writes 06-user-stories.md.
 ---
 
-# /write-user-stories — stage 7: convert prototype to stories
+# $write-user-stories — stage 7: convert prototype to stories
 
 ## Inputs
 
@@ -1433,7 +1433,7 @@ inputs: [CHOSEN, 03-prototypes/<chosen>/, 02-scope.md, context/personas.md]
 ## Done
 
 Tell PM:
-"User stories written to `06-user-stories.md`. Final step: `/handoff` to
+"User stories written to `06-user-stories.md`. Final step: `$handoff` to
 package everything for engineering."
 ```
 
@@ -1441,12 +1441,12 @@ package everything for engineering."
 
 ```bash
 git add skills/write-user-stories/SKILL.md
-git commit -m "skills: /write-user-stories — stage 7 stories + Engineer sanity-check"
+git commit -m "skills: $write-user-stories — stage 7 stories + Engineer sanity-check"
 ```
 
 ---
 
-## Task 15: /handoff skill (stage 8)
+## Task 15: $handoff skill (stage 8)
 
 **Files:**
 - Create: `skills/handoff/SKILL.md`
@@ -1461,7 +1461,7 @@ name: handoff
 description: Stage 8. Assembles HANDOFF.md (table of contents + exec summary) and packages the entire idea folder into handoff.zip for engineering. Reads all prior artifacts.
 ---
 
-# /handoff — stage 8: package for engineering
+# $handoff — stage 8: package for engineering
 
 ## Inputs
 
@@ -1562,12 +1562,12 @@ estimating."
 
 ```bash
 git add skills/handoff/SKILL.md
-git commit -m "skills: /handoff — stage 8 HANDOFF.md + handoff.zip"
+git commit -m "skills: $handoff — stage 8 HANDOFF.md + handoff.zip"
 ```
 
 ---
 
-## Task 16: /proto-maker master skill
+## Task 16: $proto-maker master skill
 
 **Files:**
 - Create: `skills/proto-maker/SKILL.md`
@@ -1579,20 +1579,20 @@ Write `skills/proto-maker/SKILL.md`:
 ```markdown
 ---
 name: proto-maker
-description: Master orchestrator. Walks the PM through stages 1-8 sequentially, asking 'ready for next stage?' at each gate. Use when starting a new idea and want guided progression. Individual stage skills (/explore, /refine, etc.) can also be invoked directly.
+description: Master orchestrator. Walks the PM through stages 1-8 sequentially, asking 'ready for next stage?' at each gate. Use when starting a new idea and want guided progression. Individual stage skills ($explore, $refine, etc.) can also be invoked directly.
 ---
 
-# /proto-maker — master pipeline orchestrator
+# $proto-maker — master pipeline orchestrator
 
 ## Preconditions
 
 1. Verify `context/product.md`, `context/personas.md`, `context/constraints.md`
-   exist and are non-empty. If not, tell the PM to run `/setup` first and stop.
+   exist and are non-empty. If not, tell the PM to run `$setup` first and stop.
 
 ## Process
 
 1. Ask the PM: "New idea, or continuing an existing one?"
-   - New: ask for the idea slug (or generate one from a one-liner). Run `/explore`.
+   - New: ask for the idea slug (or generate one from a one-liner). Run `$explore`.
    - Existing: ask which idea, list `ideas/*/` folders. Determine which stage
      they're at by checking which artifacts exist. Resume from the next stage.
 
@@ -1603,16 +1603,16 @@ description: Master orchestrator. Walks the PM through stages 1-8 sequentially, 
    - re-run → invoke the same stage skill again (after warning artifacts will be overwritten)
 
 3. Stage-by-stage routing:
-   - Stage 1: `/explore` → produces `00-exploration.md`
-   - Stage 2: `/refine` → produces `01-alternatives.md` (with verdict)
-   - Stage 3: `/document-scope` → produces `02-scope.md`
+   - Stage 1: `$explore` → produces `00-exploration.md`
+   - Stage 2: `$refine` → produces `01-alternatives.md` (with verdict)
+   - Stage 3: `$document-scope` → produces `02-scope.md`
      - If verdict is `kill` and PM doesn't override, route back to stage 1
-   - Stage 4: `/build-prototypes` → produces `03-prototypes/`
-   - Stage 5: `/review-prototypes` → produces `04-review-notes.md` + `CHOSEN`
+   - Stage 4: `$build-prototypes` → produces `03-prototypes/`
+   - Stage 5: `$review-prototypes` → produces `04-review-notes.md` + `CHOSEN`
      - If `CHOSEN` is `none`, route back to stage 2
-   - Stage 6: `/iterate-prototype` → optional, can be skipped
-   - Stage 7: `/write-user-stories` → produces `06-user-stories.md`
-   - Stage 8: `/handoff` → produces `HANDOFF.md` + `handoff.zip`
+   - Stage 6: `$iterate-prototype` → optional, can be skipped
+   - Stage 7: `$write-user-stories` → produces `06-user-stories.md`
+   - Stage 8: `$handoff` → produces `HANDOFF.md` + `handoff.zip`
 
 4. After stage 8, congratulate the PM and remind them where to find the
    handoff package.
@@ -1629,7 +1629,7 @@ description: Master orchestrator. Walks the PM through stages 1-8 sequentially, 
 
 ```bash
 git add skills/proto-maker/SKILL.md
-git commit -m "skills: /proto-maker master orchestrator for stages 1-8"
+git commit -m "skills: $proto-maker master orchestrator for stages 1-8"
 ```
 
 ---
@@ -1894,9 +1894,9 @@ settings page."**
 
 ## Walkthrough
 
-### Step 1: `/setup`
+### Step 1: `$setup`
 
-Run `/setup`. Walk the three interviews. Use this canned content:
+Run `$setup`. Walk the three interviews. Use this canned content:
 
 - **Product:** "Acme Cloud", a SaaS analytics dashboard. Top features:
   dashboards, scheduled reports, user permissions.
@@ -1914,12 +1914,12 @@ Run `/setup`. Walk the three interviews. Use this canned content:
 Verify `context/product.md`, `context/personas.md`, `context/constraints.md`
 were written.
 
-### Step 2: `/proto-maker`
+### Step 2: `$proto-maker`
 
-Run `/proto-maker`. Choose "new idea". When asked for the idea, say:
+Run `$proto-maker`. Choose "new idea". When asked for the idea, say:
 "Add a dark mode toggle to the settings page."
 
-### Step 3: stage 1 (`/explore`)
+### Step 3: stage 1 (`$explore`)
 
 Walk the exploration interview. Use canned answers:
 - Problem: Users in long sessions get eye strain; viewers in low-light hate
@@ -1934,7 +1934,7 @@ Walk the exploration interview. Use canned answers:
 Verify `ideas/add-a-dark-mode-toggle-to-the-settings-page/00-exploration.md`
 exists with all 8 H2 sections.
 
-### Step 4: stage 2 (`/refine`)
+### Step 4: stage 2 (`$refine`)
 
 Let proto-maker propose alternatives. Expect ~3 (e.g., "manual toggle",
 "auto-switch", "scheduled"). Confirm them. Wait for the 3 critic memos to
@@ -1942,7 +1942,7 @@ return. Inspect the verdict — for this idea it should be `proceed`.
 
 Verify `01-alternatives.md` exists with verdict block.
 
-### Step 5: stage 3 (`/document-scope`)
+### Step 5: stage 3 (`$document-scope`)
 
 Walk through hypothesis, criteria, risk, personas. Suggested:
 - Hypothesis: stakeholders agree manual + persisted dark mode is sufficient
@@ -1953,7 +1953,7 @@ Walk through hypothesis, criteria, risk, personas. Suggested:
 
 Verify `02-scope.md` has all 4 sections.
 
-### Step 6: stage 4 (`/build-prototypes`)
+### Step 6: stage 4 (`$build-prototypes`)
 
 Accept default 3 alternatives. Provide 3 angles (e.g., "settings-toggle",
 "global-header-toggle", "auto-by-time"). Wait for designer + critic + UA +
@@ -1966,13 +1966,13 @@ Verify:
   `critiques/engineer.md` in 150–400 word range
 - `03-prototypes/index.html` is a landing page
 
-### Step 7: `/preview` and visual review
+### Step 7: `$preview` and visual review
 
-Run `/preview`. Open the URL it prints in a browser. Click through each
+Run `$preview`. Open the URL it prints in a browser. Click through each
 alternative. Add a few annotations via the `?` button. Verify they're
 written under `03-prototypes/<alt>/annotations/*.json`.
 
-### Step 8: stage 5 (`/review-prototypes`)
+### Step 8: stage 5 (`$review-prototypes`)
 
 Walk the review for each alternative. Pick a winner (e.g., "settings-toggle").
 
@@ -1980,19 +1980,19 @@ Verify:
 - `04-review-notes.md` exists with sections per alternative + Decision
 - `03-prototypes/CHOSEN` contains the chosen alt's folder name
 
-### Step 9: stage 6 (`/iterate-prototype`) — optional
+### Step 9: stage 6 (`$iterate-prototype`) — optional
 
 Try one iteration. Suggest: "Add a 'reset to system default' button."
 Verify `.history/iter-1/` snapshot was made. Verify the chosen alt's HTML
 was updated.
 
-### Step 10: stage 7 (`/write-user-stories`)
+### Step 10: stage 7 (`$write-user-stories`)
 
 For each TBD found, classify as story / AC / out-of-scope. Verify
 `06-user-stories.md` has frontmatter + In-scope + Out-of-scope sections.
 Each story should follow the conventional template.
 
-### Step 11: stage 8 (`/handoff`)
+### Step 11: stage 8 (`$handoff`)
 
 Verify:
 - `HANDOFF.md` exists with all required sections populated (no placeholder text)
@@ -2033,12 +2033,12 @@ git commit -m "tests: dogfood walkthrough — canonical end-to-end test for prot
 | §4.4 | Hybrid orchestration: master skill + standalone stage skills | Tasks 6–16 |
 | §4.5 | Skills for conversational stages, subagents for generation | Tasks 6–16 (skills); 2–5 (subagents) |
 | §4.6 | Designer, Critic, User Advocate, Engineer | Tasks 2, 3, 4, 5 |
-| §5.1 | `/setup` one-time bootstrap | Task 6 |
-| §5.2 | `/preview` server lifecycle | Task 7 |
+| §5.1 | `$setup` one-time bootstrap | Task 6 |
+| §5.2 | `$preview` server lifecycle | Task 7 |
 | §5.3 | All 8 stage skills | Tasks 8–15 |
 | §5.4 | Stage 4 evolution flow (Designer → critiques → Designer) | Task 11 |
 | §5.5 | Verdict block in 01-alternatives.md | Tasks 3, 9 |
-| §5.6 | CHOSEN pointer in /review-prototypes | Task 12 |
+| §5.6 | CHOSEN pointer in $review-prototypes | Task 12 |
 | §5.7 | HANDOFF.md + handoff.zip | Task 15 |
 | §6.1 | Frontmatter on every artifact | All stage skills + Task 17 |
 | §6.2 | 02-scope.md required sections | Task 10 |

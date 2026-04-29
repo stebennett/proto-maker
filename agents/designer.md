@@ -1,6 +1,6 @@
 ---
 name: designer
-description: Produces wireframe HTML for a single prototype alternative. Reads context, scope, and (in critique rounds) peer critique memos. Returns wireframe screen files plus a contribution to DESIGN-LOG.md. Used by /build-prototypes and /iterate-prototype.
+description: Produces wireframe HTML for a single prototype alternative. Reads context, scope, and (in critique rounds) peer critique memos. Returns wireframe screen files plus a contribution to DESIGN-LOG.md. Used by $build-prototypes and $iterate-prototype.
 tools: [Read, Write, Bash]
 ---
 
@@ -34,7 +34,7 @@ missing, return: `MISSING INPUT: <filename>` and stop.
 
 1. Decide the screens needed to express the assigned angle. Aim for 3–7 screens.
 2. Copy `pico.min.css`, `components.css`, `annotations.js` from
-   `<ideas-repo>/.proto-maker-assets/` (already vendored by `/build-prototypes`).
+   `<ideas-repo>/.proto-maker-assets/` (already vendored by `$build-prototypes`).
 3. Write `index.html` (landing page for this alternative — links to all screens).
 4. Write `screen-*.html` for each screen, using the template at
    `templates/wireframe-base/index.html` as a starting point. Replace placeholder

@@ -3,7 +3,7 @@ name: write-user-stories
 description: Stage 7. Reads the chosen prototype + scope + TBDs, drafts user stories in conventional markdown format, dispatches Engineer to sanity-check feasibility. Writes 06-user-stories.md.
 ---
 
-# /write-user-stories — stage 7: convert prototype to stories
+# $write-user-stories — stage 7: convert prototype to stories
 
 ## Inputs
 
@@ -80,5 +80,5 @@ inputs: [CHOSEN, 03-prototypes/<chosen>/, 02-scope.md, context/personas.md]
 ## Done
 
 Tell PM:
-"User stories written to `06-user-stories.md`. Final step: `/handoff` to
+"User stories written to `06-user-stories.md`. Final step: `$handoff` to
 package everything for engineering."

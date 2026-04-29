@@ -34,7 +34,7 @@ Don't silently reverse these. If a change seems to require one, raise it with th
 - **D4:** Four role-specialized subagents (Designer / Critic / User Advocate / Engineer). Don't collapse them.
 - **D5:** `context/*.md` is required before any per-idea skill runs.
 - **D6:** Wireframes use clean-minimal styling (Pico.css), not sketch/Balsamiq.
-- **D9:** Creative tension lives at BOTH `/refine` and `/build-prototypes`.
+- **D9:** Creative tension lives at BOTH `$refine` and `$build-prototypes`.
 - **D10:** Go static binaries, unsigned for v1.
 
 Full rationale for each in [docs/DECISIONS.md](docs/DECISIONS.md).
@@ -93,5 +93,5 @@ Each plan lists which of these to run when.
 ## Branch / git hygiene
 
 - Work directly on `main`. The repo is greenfield and small; branch overhead isn't justified.
-- Commits are conventional-ish: `<subsystem>: <summary>` (e.g., `server: implement ping handler`, `skills: /refine stage 2 dispatch logic`).
+- Commits are conventional-ish: `<subsystem>: <summary>` (e.g., `server: implement ping handler`, `skills: $refine stage 2 dispatch logic`).
 - Never force-push. Never `git reset --hard` without user approval.

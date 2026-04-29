@@ -84,4 +84,4 @@ case ":$PATH:" in
 esac
 
 echo ""
-echo "Done. Open Codex CLI and try: /setup"
+echo 'Done. Open Codex CLI and try: $setup'

@@ -32,7 +32,7 @@ Decisions are listed in the order they were made during brainstorming. Each entr
 - Installers fetch release zips via built-in tools (curl / Invoke-WebRequest), never `git clone`.
 - Skills are forbidden from running `git`, `gh`, `npm`, `pip`, etc. AGENTS.md enforces this at the top of "Forbidden actions."
 - Iteration history uses filesystem snapshots (`.history/iter-N/`) instead of git history.
-- The `/handoff` skill produces a zip (not a pull request) as the engineering deliverable.
+- The `$handoff` skill produces a zip (not a pull request) as the engineering deliverable.
 - Cross-platform server packaged as a Go static binary, not Python (Python isn't guaranteed on Windows) or Node (not guaranteed anywhere).
 
 **Scope of the rule:** PM-facing runtime only. The proto-maker *maintainer* repo (this one) uses git normally.
@@ -43,7 +43,7 @@ Decisions are listed in the order they were made during brainstorming. Each entr
 
 ## D3 — Hybrid orchestration (master skill + standalone stage skills)
 
-**Decision:** A master `/proto-maker` skill walks the PM through stages 1→8 sequentially with confirmation gates, AND each stage is a standalone skill invocable directly.
+**Decision:** A master `$proto-maker` skill walks the PM through stages 1→8 sequentially with confirmation gates, AND each stage is a standalone skill invocable directly.
 
 **Alternatives considered:**
 - **Monolithic master skill only** — guided but inflexible
@@ -57,7 +57,7 @@ Decisions are listed in the order they were made during brainstorming. Each entr
 
 ## D4 — Role-specialized subagents for creative tension
 
-**Decision:** Four subagents — **Designer, Critic, User Advocate, Engineer** — provide creative tension at two stages: `/refine` (is this alternative worth prototyping?) and `/build-prototypes` (does this wireframe faithfully express the idea?).
+**Decision:** Four subagents — **Designer, Critic, User Advocate, Engineer** — provide creative tension at two stages: `$refine` (is this alternative worth prototyping?) and `$build-prototypes` (does this wireframe faithfully express the idea?).
 
 **Alternatives considered:**
 - **One general-purpose prototype subagent** producing N alternatives from the same brain
@@ -76,7 +76,7 @@ Decisions are listed in the order they were made during brainstorming. Each entr
 
 ## D5 — Context injection is first-class
 
-**Decision:** Before any per-idea work runs, the PM populates three files via `/setup`: `context/product.md`, `context/personas.md`, `context/constraints.md`. Every stage skill and subagent reads these first. Every skill refuses to run if they're missing or empty.
+**Decision:** Before any per-idea work runs, the PM populates three files via `$setup`: `context/product.md`, `context/personas.md`, `context/constraints.md`. Every stage skill and subagent reads these first. Every skill refuses to run if they're missing or empty.
 
 **Why:** Without concrete product / persona / constraint text, the User Advocate subagent has no persona to channel and the Engineer subagent has no constraints to flag against. The critics collapse into generic churn. This was called out as a critical gap during brainstorming (*"context injection is critical"* — Steve).
 
@@ -95,7 +95,7 @@ Decisions are listed in the order they were made during brainstorming. Each entr
 
 **Why (Steve's rationale):** Target audience includes execs, and sketch-style wireframes undermine credibility in that room. The trade-off — reviewers being tempted to give feedback on colors / spacing instead of scope — is real and was knowingly accepted.
 
-**Mitigation for the accepted risk:** `/review-prototypes` explicitly frames the review with *"focus on scope, not colors/spacing."*
+**Mitigation for the accepted risk:** `$review-prototypes` explicitly frames the review with *"focus on scope, not colors/spacing."*
 
 **Status:** **Locked in. Don't re-suggest Balsamiq or low-fi styling as a "fix" for feedback drift.** Steve saw the trade-off and chose C deliberately.
 
@@ -134,8 +134,8 @@ Decisions are listed in the order they were made during brainstorming. Each entr
 ## D9 — Tension at BOTH refinement and prototyping stages
 
 **Decision:** The four critique subagents are invoked at TWO distinct stages:
-- **`/refine` (stage 2)** — attacks the alternative space: is this the right thing to build? Produces a verdict (`proceed | revise | kill`).
-- **`/build-prototypes` (stage 4)** — attacks each prototype individually: does this wireframe faithfully express the idea?
+- **`$refine` (stage 2)** — attacks the alternative space: is this the right thing to build? Produces a verdict (`proceed | revise | kill`).
+- **`$build-prototypes` (stage 4)** — attacks each prototype individually: does this wireframe faithfully express the idea?
 
 **Alternative considered:** Tension at only one of the two stages.
 

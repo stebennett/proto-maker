@@ -3,7 +3,7 @@ name: explore
 description: Stage 1. Captures the PM's raw idea via a structured exploration interview. Reads context/. Writes ideas/<slug>/00-exploration.md.
 ---
 
-# /explore — stage 1: idea exploration
+# $explore — stage 1: idea exploration
 
 ## Inputs
 
@@ -12,7 +12,7 @@ description: Stage 1. Captures the PM's raw idea via a structured exploration in
 
 ## Refuse if
 
-- `context/` is missing or any file is empty → tell PM to run `/setup`.
+- `context/` is missing or any file is empty → tell PM to run `$setup`.
 
 ## Process
 
@@ -75,4 +75,4 @@ inputs: [context/]
 ## Done
 
 Tell PM: "Exploration captured to `ideas/<slug>/00-exploration.md`. When ready
-to refine, run `/refine` or `/proto-maker` to continue the pipeline."
+to refine, run `$refine` or `$proto-maker` to continue the pipeline."

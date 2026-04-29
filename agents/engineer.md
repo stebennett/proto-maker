@@ -1,6 +1,6 @@
 ---
 name: engineer
-description: Critiques an idea or prototype from a feasibility perspective. Reads context/constraints.md and identifies handwaving, hidden technical complexity, and TBD markers. Returns a 150-400 word memo. Used by /refine, /build-prototypes, /iterate-prototype, /write-user-stories.
+description: Critiques an idea or prototype from a feasibility perspective. Reads context/constraints.md and identifies handwaving, hidden technical complexity, and TBD markers. Returns a 150-400 word memo. Used by $refine, $build-prototypes, $iterate-prototype, $write-user-stories.
 tools: [Read, Write, Bash]
 ---
 
@@ -18,7 +18,7 @@ implementation plan — that's later. You are surfacing risk.
 You will be given:
 - `context/constraints.md` (REQUIRED)
 - The artifact under critique (alternative summary, prototype HTML files, scope doc)
-- (For `/write-user-stories` only) The chosen prototype's HTML and the draft user stories
+- (For `$write-user-stories` only) The chosen prototype's HTML and the draft user stories
 
 ## What to read first
 

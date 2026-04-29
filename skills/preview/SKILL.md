@@ -3,7 +3,7 @@ name: preview
 description: Starts the local proto-maker-server in the background so the wireframe overlay can persist annotations to disk. Idempotent. Run once per Codex session before reviewing prototypes in the browser.
 ---
 
-# /preview — start the local prototype server
+# $preview — start the local prototype server
 
 ## When to use
 
@@ -26,7 +26,7 @@ overlay falls back to offline mode (localStorage + clipboard).
    ```
    If empty, tell the PM:
    "I can't find the proto-maker-server binary. Reinstall proto-maker
-   (rerun the installer you used originally). Then try `/preview` again."
+   (rerun the installer you used originally). Then try `$preview` again."
    Stop.
 
 3. Pick a free port from 4788–4798 and start the server in the background,

@@ -1,19 +1,19 @@
 ---
 name: proto-maker
-description: Master orchestrator. Walks the PM through stages 1-8 sequentially, asking 'ready for next stage?' at each gate. Use when starting a new idea and want guided progression. Individual stage skills (/explore, /refine, etc.) can also be invoked directly.
+description: Master orchestrator. Walks the PM through stages 1-8 sequentially, asking 'ready for next stage?' at each gate. Use when starting a new idea and want guided progression. Individual stage skills ($explore, $refine, etc.) can also be invoked directly.
 ---
 
-# /proto-maker — master pipeline orchestrator
+# $proto-maker — master pipeline orchestrator
 
 ## Preconditions
 
 1. Verify `context/product.md`, `context/personas.md`, `context/constraints.md`
-   exist and are non-empty. If not, tell the PM to run `/setup` first and stop.
+   exist and are non-empty. If not, tell the PM to run `$setup` first and stop.
 
 ## Process
 
 1. Ask the PM: "New idea, or continuing an existing one?"
-   - New: ask for the idea slug (or generate one from a one-liner). Run `/explore`.
+   - New: ask for the idea slug (or generate one from a one-liner). Run `$explore`.
    - Existing: ask which idea, list `ideas/*/` folders. Determine which stage
      they're at by checking which artifacts exist. Resume from the next stage.
 
@@ -24,16 +24,16 @@ description: Master orchestrator. Walks the PM through stages 1-8 sequentially, 
    - re-run → invoke the same stage skill again (after warning artifacts will be overwritten)
 
 3. Stage-by-stage routing:
-   - Stage 1: `/explore` → produces `00-exploration.md`
-   - Stage 2: `/refine` → produces `01-alternatives.md` (with verdict)
-   - Stage 3: `/document-scope` → produces `02-scope.md`
+   - Stage 1: `$explore` → produces `00-exploration.md`
+   - Stage 2: `$refine` → produces `01-alternatives.md` (with verdict)
+   - Stage 3: `$document-scope` → produces `02-scope.md`
      - If verdict is `kill` and PM doesn't override, route back to stage 1
-   - Stage 4: `/build-prototypes` → produces `03-prototypes/`
-   - Stage 5: `/review-prototypes` → produces `04-review-notes.md` + `CHOSEN`
+   - Stage 4: `$build-prototypes` → produces `03-prototypes/`
+   - Stage 5: `$review-prototypes` → produces `04-review-notes.md` + `CHOSEN`
      - If `CHOSEN` is `none`, route back to stage 2
-   - Stage 6: `/iterate-prototype` → optional, can be skipped
-   - Stage 7: `/write-user-stories` → produces `06-user-stories.md`
-   - Stage 8: `/handoff` → produces `HANDOFF.md` + `handoff.zip`
+   - Stage 6: `$iterate-prototype` → optional, can be skipped
+   - Stage 7: `$write-user-stories` → produces `06-user-stories.md`
+   - Stage 8: `$handoff` → produces `HANDOFF.md` + `handoff.zip`
 
 4. After stage 8, congratulate the PM and remind them where to find the
    handoff package.

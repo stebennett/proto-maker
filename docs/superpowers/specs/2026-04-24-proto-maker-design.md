@@ -98,7 +98,7 @@ proto-maker/
 ```
 my-product-ideas/
   AGENTS.md                    # thin pointer to proto-maker's constitution
-  context/                     # populated by /setup, one-time per product
+  context/                     # populated by $setup, one-time per product
     product.md
     personas.md
     constraints.md
@@ -109,7 +109,7 @@ my-product-ideas/
       02-scope.md              # hypothesis + success criteria + main risk + personas served
       03-prototypes/
         index.html             # landing page comparing the 3 alternatives
-        CHOSEN                 # plain-text pointer, written by /review-prototypes
+        CHOSEN                 # plain-text pointer, written by $review-prototypes
         alt-1-<angle>/
           index.html
           screen-*.html
@@ -127,13 +127,13 @@ my-product-ideas/
         iter-1/
         iter-2/
       06-user-stories.md
-      HANDOFF.md               # written by /handoff
-      handoff.zip              # written by /handoff
+      HANDOFF.md               # written by $handoff
+      handoff.zip              # written by $handoff
 ```
 
 ### 4.4 Orchestration Model
 
-Hybrid. A master skill (`/proto-maker`) walks the PM through stages 1→8, pausing for confirmation at each gate. Each stage is also a standalone skill the PM can invoke directly to rerun or jump around. Stage-to-stage communication is always via files; no hidden state.
+Hybrid. A master skill (`$proto-maker`) walks the PM through stages 1→8, pausing for confirmation at each gate. Each stage is also a standalone skill the PM can invoke directly to rerun or jump around. Stage-to-stage communication is always via files; no hidden state.
 
 ### 4.5 Primitives
 
@@ -153,11 +153,11 @@ Critiques are independent and parallel. No inter-subagent debate; tension comes 
 
 ## 5. The Pipeline
 
-### 5.1 One-Time Setup: `/setup`
+### 5.1 One-Time Setup: `$setup`
 
-Not in the stage sequence. Walks the PM through an interview to populate `context/product.md`, `context/personas.md`, `context/constraints.md`. The master `/proto-maker` skill refuses to proceed until these files exist and are non-empty.
+Not in the stage sequence. Walks the PM through an interview to populate `context/product.md`, `context/personas.md`, `context/constraints.md`. The master `$proto-maker` skill refuses to proceed until these files exist and are non-empty.
 
-### 5.2 One-Time Per Session: `/preview`
+### 5.2 One-Time Per Session: `$preview`
 
 Not in the stage sequence. Starts `proto-maker-server` as a background process serving the current ideas repo. Walks port 4788 → 4789 → 4790 if 4788 is taken. Reports the URL. Idempotent — detects an already-running server and reports its URL rather than double-starting.
 
@@ -165,18 +165,18 @@ Not in the stage sequence. Starts `proto-maker-server` as a background process s
 
 | # | Skill | Reads | Writes | Subagents |
 |---|---|---|---|---|
-| 1 | `/explore` | context/ + PM's raw idea | `00-exploration.md` | none |
-| 2 | `/refine` | context/ + 00-exploration.md | `01-alternatives.md` (with verdict) | Critic, User Advocate, Engineer |
-| 3 | `/document-scope` | 01-alternatives.md | `02-scope.md` | none |
-| 4 | `/build-prototypes` | context/ + 02-scope.md | `03-prototypes/alt-*/` + index.html | Designer × N (parallel), then Critic + User Advocate + Engineer × N (parallel), then Designer evolves |
-| 5 | `/review-prototypes` | 03-prototypes/ + annotations/ | `04-review-notes.md` + `03-prototypes/CHOSEN` | none |
-| 6 | `/iterate-prototype` | CHOSEN + 04-review-notes.md | updated alt + `05-iteration-log.md` + `.history/iter-N/` | Designer (rework), then Critic + User Advocate + Engineer (validate the rework, same panel as stage 4) |
-| 7 | `/write-user-stories` | CHOSEN + 02-scope.md + TBDs | `06-user-stories.md` | Engineer (sanity) |
-| 8 | `/handoff` | all prior artifacts | `HANDOFF.md` + `handoff.zip` | none |
+| 1 | `$explore` | context/ + PM's raw idea | `00-exploration.md` | none |
+| 2 | `$refine` | context/ + 00-exploration.md | `01-alternatives.md` (with verdict) | Critic, User Advocate, Engineer |
+| 3 | `$document-scope` | 01-alternatives.md | `02-scope.md` | none |
+| 4 | `$build-prototypes` | context/ + 02-scope.md | `03-prototypes/alt-*/` + index.html | Designer × N (parallel), then Critic + User Advocate + Engineer × N (parallel), then Designer evolves |
+| 5 | `$review-prototypes` | 03-prototypes/ + annotations/ | `04-review-notes.md` + `03-prototypes/CHOSEN` | none |
+| 6 | `$iterate-prototype` | CHOSEN + 04-review-notes.md | updated alt + `05-iteration-log.md` + `.history/iter-N/` | Designer (rework), then Critic + User Advocate + Engineer (validate the rework, same panel as stage 4) |
+| 7 | `$write-user-stories` | CHOSEN + 02-scope.md + TBDs | `06-user-stories.md` | Engineer (sanity) |
+| 8 | `$handoff` | all prior artifacts | `HANDOFF.md` + `handoff.zip` | none |
 
 **Default alternatives count (stage 4):** 3. Overridable via skill argument.
 
-**Master skill `/proto-maker`:** drives stages 1→8 sequentially, asking "ready for stage N+1?" at each gate. Does not bypass any stage. Checks `context/` is populated before starting stage 1.
+**Master skill `$proto-maker`:** drives stages 1→8 sequentially, asking "ready for stage N+1?" at each gate. Does not bypass any stage. Checks `context/` is populated before starting stage 1.
 
 ### 5.4 Stage 4 Evolution Flow (the key tension mechanism)
 
@@ -194,7 +194,7 @@ Designer writes DESIGN-LOG.md (rationale, critiques summary, what changed, what 
 
 Only v2 is shipped. v1 is transient. The `DESIGN-LOG.md` prose captures what changed.
 
-### 5.5 Critic Verdict in `/refine`
+### 5.5 Critic Verdict in `$refine`
 
 `01-alternatives.md` ends with a fenced YAML block:
 
@@ -204,15 +204,15 @@ justification: |
   Short prose explaining the verdict.
 ```
 
-If verdict is `kill`, `/document-scope` prints the verdict and requires explicit PM override to proceed. The override is recorded in `02-scope.md`.
+If verdict is `kill`, `$document-scope` prints the verdict and requires explicit PM override to proceed. The override is recorded in `02-scope.md`.
 
-### 5.6 Winner Selection in `/review-prototypes`
+### 5.6 Winner Selection in `$review-prototypes`
 
-Produces two outputs: the `04-review-notes.md` markdown doc AND the `03-prototypes/CHOSEN` pointer file. `CHOSEN` contains a single line: either the winning alternative folder name (e.g., `alt-2-guided`) or `none` (which routes back to `/refine`). Subsequent stages (6, 7, 8) refuse to run unless `CHOSEN` exists and is not `none`.
+Produces two outputs: the `04-review-notes.md` markdown doc AND the `03-prototypes/CHOSEN` pointer file. `CHOSEN` contains a single line: either the winning alternative folder name (e.g., `alt-2-guided`) or `none` (which routes back to `$refine`). Subsequent stages (6, 7, 8) refuse to run unless `CHOSEN` exists and is not `none`.
 
 ### 5.7 Handoff Package
 
-`/handoff` produces:
+`$handoff` produces:
 
 - `HANDOFF.md` at the idea root — exec summary, hypothesis, personas served, chosen prototype pointer, user stories, open questions (extracted from remaining TBDs), engineering sign-offs checklist.
 - `handoff.zip` containing the entire idea folder (including context snapshot) so engineering can open it standalone without the PM's full environment.
@@ -349,17 +349,17 @@ Skills must never instruct the PM to run `git`, `gh`, `npm`, `pip`, or any other
 
 | Scenario | Handling |
 |---|---|
-| `/explore` run before `/setup` (empty/missing context/) | Refuse; direct to `/setup` |
+| `$explore` run before `$setup` (empty/missing context/) | Refuse; direct to `$setup` |
 | Later stage run without its required input | Refuse; print expected path and prior stage skill name |
-| Critic verdict = `kill` but PM wants to proceed | `/document-scope` prints verdict, requires explicit override, records override in `02-scope.md` |
+| Critic verdict = `kill` but PM wants to proceed | `$document-scope` prints verdict, requires explicit override, records override in `02-scope.md` |
 | Subagent returns empty/incoherent output | Retry once; if still bad, write `critiques/<role>-FAILED.md` and continue |
-| Port 4788 in use | `/preview` walks to next available, reports actual URL |
-| `proto-maker-server` binary missing from PATH | `/preview` prints reinstall instructions |
+| Port 4788 in use | `$preview` walks to next available, reports actual URL |
+| `proto-maker-server` binary missing from PATH | `$preview` prints reinstall instructions |
 | PM re-runs a completed stage | Warn; ask to overwrite or create `.v2` sibling |
-| Malformed annotation JSON | `/review-prototypes` lists unreadable files, doesn't fail the stage |
-| Every alternative's verdict is `kill` | `/refine` records explicitly; master skill routes back to `/explore` |
+| Malformed annotation JSON | `$review-prototypes` lists unreadable files, doesn't fail the stage |
+| Every alternative's verdict is `kill` | `$refine` records explicitly; master skill routes back to `$explore` |
 | Mid-run abandonment | No cleanup needed; files are the state |
-| Stage 6/7/8 run with missing or `none` CHOSEN | Refuse; direct PM to run `/review-prototypes` first (or re-run `/refine` if none were acceptable) |
+| Stage 6/7/8 run with missing or `none` CHOSEN | Refuse; direct PM to run `$review-prototypes` first (or re-run `$refine` if none were acceptable) |
 
 **Known limitations (README):** single-user per idea; prototypes >30 screens not optimized; no simulated backend data.
 
@@ -421,7 +421,7 @@ These are deliberately left for the implementation plan, not prejudged here:
 
 v1 is shippable when:
 
-1. A PM on a clean Windows 11 machine can install proto-maker from a release zip, run `/setup` + `/proto-maker` on the canned sample idea, and produce a valid `HANDOFF.md` + `handoff.zip` without intervention.
+1. A PM on a clean Windows 11 machine can install proto-maker from a release zip, run `$setup` + `$proto-maker` on the canned sample idea, and produce a valid `HANDOFF.md` + `handoff.zip` without intervention.
 2. The same sample runs through on macOS and Linux without platform-specific errors.
 3. A stakeholder can receive the handoff zip, extract it, open the chosen prototype in a browser, annotate it, and return structured annotation JSON to the PM — all without the server and without any install.
 4. `DESIGN-LOG.md` for every alternative contains a substantive "what changed and what was ignored" section — not placeholders.
